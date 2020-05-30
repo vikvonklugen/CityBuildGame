@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 192125190}
   - component: {fileID: 192125189}
   - component: {fileID: 192125192}
+  - component: {fileID: 192125193}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -217,6 +218,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f38ba1a7b53fb794498eeeeb4fc836b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &192125193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192125188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c08fced0c6dc0eb4f98613f925fe3251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickableObjects:
+    serializedVersion: 2
+    m_Bits: 0
+  cam: {fileID: 0}
 --- !u!1 &681361084
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,6 +922,11 @@ PrefabInstance:
     - target: {fileID: 751989076432279423, guid: e8bbc1ec885d0e74bb6d581a79524095,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 751989076432279423, guid: e8bbc1ec885d0e74bb6d581a79524095,
+        type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1596356906647491057, guid: e8bbc1ec885d0e74bb6d581a79524095,
@@ -1633,6 +1655,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GridHolder
+      objectReference: {fileID: 0}
+    - target: {fileID: 7617466057001472438, guid: 57b1c197fcd7e6f44b099010f7f63b10,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57b1c197fcd7e6f44b099010f7f63b10, type: 3}
