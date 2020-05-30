@@ -23,6 +23,7 @@ public class GridManager : MonoBehaviour
 
     private void GenerateGrid ()
     {
+        int tileIndex = 0;
         GameObject referenceTile = (GameObject)Instantiate(Resources.Load("placeholderTile"));
 
         for (int row = 0; row < rows; row++)
@@ -31,9 +32,13 @@ public class GridManager : MonoBehaviour
             {
 
                 GameObject tile = Instantiate(referenceTile, transform) as GameObject;
+                tile.AddComponent<BoxCollider2D>();
+                tile.name = tileIndex.ToString();
+                tile.layer = 8;
                 float posX = col * tileSize;
                 float posY = row * -tileSize; // <-- cartesian position system
                 tile.transform.position = new Vector2(posX, posY);
+                tileIndex++;
             }
         }
 
@@ -42,11 +47,5 @@ public class GridManager : MonoBehaviour
         float gridWidth = cols * tileSize;
         float gridHeight = rows * tileSize;
         transform.position = new Vector2(gridWidth / 2 + tileSize / 2, gridHeight / 2 - tileSize / 2);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
