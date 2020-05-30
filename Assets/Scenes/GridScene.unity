@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 192125191}
   - component: {fileID: 192125190}
   - component: {fileID: 192125189}
-  - component: {fileID: 192125192}
   - component: {fileID: 192125193}
   m_Layer: 0
   m_Name: Main Camera
@@ -206,22 +205,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &192125192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 192125188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f38ba1a7b53fb794498eeeeb4fc836b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  touchStart: {x: 0, y: 0, z: 0}
-  minZoom: 1
-  maxZoom: 8
-  scrollSensitivity: 8
 --- !u!114 &192125193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,14 +218,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+  controlMode: 0
   clickableObjects:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   colorTransitionSpeed: 0.02
   flashColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
   minZoom: 1
   maxZoom: 8
-  scrollSensitivity: 4
+  mobilePinchSensitivity: 0.01
+  PCScrollSensitivity: 1
+  cameraBounds: {x: 5, y: 5}
 --- !u!1 &681361084
 GameObject:
   m_ObjectHideFlags: 0

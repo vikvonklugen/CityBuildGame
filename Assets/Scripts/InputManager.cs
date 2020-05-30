@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
@@ -13,8 +12,8 @@ public class InputManager : MonoBehaviour
 
 	public LayerMask clickableObjects;
 
-	public float colorTransitionSpeed = 0.01f;
-	public Color flashColor;
+	public float colorTransitionSpeed = 0.02f;
+	public Color flashColor = Color.gray;
 	private IEnumerator colorShifter;
 
 	public static GameObject selectedTile;
@@ -28,7 +27,7 @@ public class InputManager : MonoBehaviour
 	public float PCScrollSensitivity = 1f;
 	private bool isMultiTouching;
 
-	public Vector2 cameraBounds;
+	public Vector2 cameraBounds = new Vector2(5f, 5f);
 
 	private void Start()
 	{
@@ -37,10 +36,12 @@ public class InputManager : MonoBehaviour
 
 	void Update()
 	{
+		// Zoom on mobile with 2 fingers
 		if (Input.touchCount == 2)
 		{
 			isMultiTouching = true;
 
+			// Calculate difference between previous distance between 2 fingers and current distance between 2 fingers
 			Touch touchZero = Input.GetTouch(0);
 			Touch touchOne = Input.GetTouch(1);
 
@@ -52,39 +53,50 @@ public class InputManager : MonoBehaviour
 
 			float difference = currentMagnitude - prevMagnitude;
 
+			// Apply that difference to zoom function
 			Zoom(difference * mobilePinchSensitivity);
 		}
 
+		// Zoom on PC with scrollwheel (not working for me, it is for some reason always giving me a value of zero on my scroll wheel input)
 		Zoom(Input.GetAxis("Mouse ScrollWheel") * PCScrollSensitivity);
 
+		// Initialise some values on initial mouse press
 		if (Input.GetMouseButtonDown(0))
 		{
 			panning = false;
 			touchStart = cam.ScreenToWorldPoint(MousePosition());
 		}
 
+
 		if (Input.GetMouseButton(0))
 		{
+			// Find difference between pointer position and camera position
 			Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(MousePosition());
 
-			if ((isMultiTouching && Input.touchCount < 2))
+			// If the player lifts the finger that touched the screen first before lifting the other finger, the game would snap to the new first finger position. That is why we need to set the direction to zero briefly.
+			if (isMultiTouching && Input.touchCount < 2)
 			{
 				direction = Vector2.zero;
 				isMultiTouching = false;
 			}
 
+			// Move the camera
 			cam.transform.position += direction;
+
+			// Clamp camera pos to bounded area
 			cam.transform.position = new Vector3(
 				Mathf.Clamp(cam.transform.position.x, -cameraBounds.x, cameraBounds.x),
 				Mathf.Clamp(cam.transform.position.y, -cameraBounds.y, cameraBounds.y),
 				-10f);
 
+			// Check if player is panning or clicking
 			if (!panning)
 			{
 				panning = direction.magnitude > 0.1f;
 			}
 		}
 
+		// Select a tile if player wasn't panning and start color animation
 		if (Input.GetMouseButtonUp(0))
 		{
 			if (!panning)
@@ -93,11 +105,14 @@ public class InputManager : MonoBehaviour
 				RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 				if (hit)
 				{
+					// Stop previous running selection coroutine and reset their color
 					if (selectedTile != null)
 					{
 						StopCoroutine(colorShifter);
 						selectedTile.GetComponent<SpriteRenderer>().color = Color.white;
 					}
+
+					// Start new selection coroutine
 					colorShifter = ColorShifter(hit.collider.gameObject);
 					StartCoroutine(colorShifter);
 				}
@@ -105,11 +120,13 @@ public class InputManager : MonoBehaviour
 		}
 	}
 
+	// Zoom the camera
 	void Zoom(float increment)
 	{
 		cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - increment, minZoom, maxZoom);
 	}
 
+	// Return mouse or finger position based on platform or setting
 	Vector2 MousePosition()
 	{
 		if (controlMode == manualControlOverride.Mobile)
@@ -128,6 +145,7 @@ public class InputManager : MonoBehaviour
 		#endif
 	}
 
+	// Shifts colors of selected tile
 	IEnumerator ColorShifter(GameObject tile)
 	{
 		selectedTile = tile;
@@ -138,8 +156,11 @@ public class InputManager : MonoBehaviour
 
 		while (true)
 		{
+			// Change color gradually
 			spriteRenderer.color = Color.Lerp(originalColor, flashColor, transition);
 			transition += colorTransitionSpeed;
+
+			// Reverse color fade direction having reached min or max value
 			if (transition < 0 || transition > 1)
 			{
 				colorTransitionSpeed = -colorTransitionSpeed;
