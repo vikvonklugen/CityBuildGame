@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Hero Character", menuName = " Hero persona", order = 3)]
+[CreateAssetMenu(fileName = "Hero Character", menuName = "Hero persona", order = 3)]
 public class HeroCharacter : ScriptableObject
 {
     [HideInInspector]
