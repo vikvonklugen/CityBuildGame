@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class GridManager : MonoBehaviour
 
     [SerializeField]
     private float tileSize = 1;
+    public static List<GameObject> tiles = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,7 @@ public class GridManager : MonoBehaviour
 
     private void GenerateGrid ()
     {
+        int tileIndex = 0;
         GameObject referenceTile = (GameObject)Instantiate(Resources.Load("placeholderTile"));
 
         for (int row = 0; row < rows; row++)
@@ -31,9 +34,14 @@ public class GridManager : MonoBehaviour
             {
 
                 GameObject tile = Instantiate(referenceTile, transform) as GameObject;
+                tile.AddComponent<BoxCollider2D>();
+                tile.name = tileIndex.ToString();
+                tile.layer = 8;
                 float posX = col * tileSize;
                 float posY = row * -tileSize; // <-- cartesian position system
                 tile.transform.position = new Vector2(posX, posY);
+                tiles.Add(tile);
+                tileIndex++;
             }
         }
 
@@ -41,12 +49,6 @@ public class GridManager : MonoBehaviour
 
         float gridWidth = cols * tileSize;
         float gridHeight = rows * tileSize;
-        transform.position = new Vector2(gridWidth / 2 + tileSize / 2, gridHeight / 2 - tileSize / 2);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        transform.position = new Vector2(-(gridWidth / 2 - tileSize / 2), gridHeight / 2 - tileSize / 2);
     }
 }
