@@ -234,6 +234,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   cam: {fileID: 0}
+  flashColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  colorTransitionSpeed: 0.02
 --- !u!1 &681361084
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,7 +1104,7 @@ PrefabInstance:
     - target: {fileID: 5669941414570901571, guid: e8bbc1ec885d0e74bb6d581a79524095,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 59.4
+      value: 59.399902
       objectReference: {fileID: 0}
     - target: {fileID: 5669941414570901571, guid: e8bbc1ec885d0e74bb6d581a79524095,
         type: 3}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class GridManager : MonoBehaviour
 
     [SerializeField]
     private float tileSize = 1;
+    public static List<GameObject> tiles = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +40,7 @@ public class GridManager : MonoBehaviour
                 float posX = col * tileSize;
                 float posY = row * -tileSize; // <-- cartesian position system
                 tile.transform.position = new Vector2(posX, posY);
+                tiles.Add(tile);
                 tileIndex++;
             }
         }
