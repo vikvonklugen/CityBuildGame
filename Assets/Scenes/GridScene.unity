@@ -218,6 +218,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f38ba1a7b53fb794498eeeeb4fc836b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  touchStart: {x: 0, y: 0, z: 0}
+  minZoom: 1
+  maxZoom: 8
+  scrollSensitivity: 8
 --- !u!114 &192125193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,12 +234,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c08fced0c6dc0eb4f98613f925fe3251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   clickableObjects:
     serializedVersion: 2
     m_Bits: 0
-  cam: {fileID: 0}
-  flashColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
   colorTransitionSpeed: 0.02
+  flashColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  minZoom: 1
+  maxZoom: 8
+  scrollSensitivity: 4
 --- !u!1 &681361084
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,7 +586,7 @@ PrefabInstance:
     - target: {fileID: 1640846596285159040, guid: 79d1095d63b024947a08860e8d47d33c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 203.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1640846596285159040, guid: 79d1095d63b024947a08860e8d47d33c,
         type: 3}
@@ -589,7 +596,7 @@ PrefabInstance:
     - target: {fileID: 1640846596285159040, guid: 79d1095d63b024947a08860e8d47d33c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -406.43112
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1640846596285159040, guid: 79d1095d63b024947a08860e8d47d33c,
         type: 3}
@@ -599,7 +606,7 @@ PrefabInstance:
     - target: {fileID: 1640846596285159040, guid: 79d1095d63b024947a08860e8d47d33c,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1640846596285159040, guid: 79d1095d63b024947a08860e8d47d33c,
         type: 3}
@@ -619,7 +626,12 @@ PrefabInstance:
     - target: {fileID: 1640846596285159040, guid: 79d1095d63b024947a08860e8d47d33c,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640846596285159041, guid: 79d1095d63b024947a08860e8d47d33c,
+        type: 3}
+      propertyPath: m_ChildForceExpandHeight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1640846596285159047, guid: 79d1095d63b024947a08860e8d47d33c,
         type: 3}
@@ -1651,7 +1663,7 @@ PrefabInstance:
     - target: {fileID: 7617466057001472437, guid: 57b1c197fcd7e6f44b099010f7f63b10,
         type: 3}
       propertyPath: tileSize
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7617466057001472438, guid: 57b1c197fcd7e6f44b099010f7f63b10,
         type: 3}
