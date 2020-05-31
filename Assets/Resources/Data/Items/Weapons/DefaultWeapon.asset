@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a78f2f21f1dd5ec4fa670ea2ddd9312f, type: 3}
-  m_Name: Weapon
+  m_Name: DefaultWeapon
   m_EditorClassIdentifier: 
+  useableByTroopType: {fileID: 0}
+  incompatibleFactions: []
+  genericArmorBypassUsageRestrictions: 1
   name: DefaultMeleeWeapon
-  description: The default melee weapon for all melee combat troop types.
+  description: The default melee weapon for all combat troop types.
   value: 0
   originFaction: {fileID: 0}
   destructable: 0
   damage: 1
+  originBonus: 0

@@ -24,3 +24,7 @@ MonoBehaviour:
   recruitable: 1
   expectedEventUsageFrequency: 7
   recruitedHappiness: 1
+  currentArmor: {fileID: 11400000, guid: 2c4cc68c2b5b2cc46bd2d1194936c8af, type: 2}
+  currentWeapon: {fileID: 11400000, guid: 90c79502b33c68a4b9e10c3425fe3b4e, type: 2}
+  desiredArmor: {fileID: 0}
+  desiredWeapon: {fileID: 0}

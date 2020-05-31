@@ -10,5 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e9e88aaeae5c784ca64d8d9a7de5a84, type: 3}
-  m_Name: Armor
+  m_Name: DefaultArmor
   m_EditorClassIdentifier: 
+  useableByTroopType: {fileID: 0}
+  incompatibleFactions: []
+  genericArmorBypassUsageRestrictions: 1
+  name: DefaultArmor
+  description: 
+  value: 0
+  originFaction: {fileID: 0}
+  destructable: 0
+  armor: 0
+  originBonus: 0
