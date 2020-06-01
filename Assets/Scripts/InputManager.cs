@@ -163,7 +163,8 @@ public class InputManager : MonoBehaviour
 
 		SpriteRenderer spriteRenderer = tile.GetComponent<SpriteRenderer>();
 		Color originalColor = spriteRenderer.color;
-		float transition = 0;
+		float transition = 0.5f;
+		colorTransitionSpeed = Mathf.Abs(colorTransitionSpeed);
 
 		while (true)
 		{
