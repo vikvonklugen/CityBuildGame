@@ -18,8 +18,10 @@ public class InputManager : MonoBehaviour
 
 	public static GameObject selectedTile;
 
-	private Vector3 touchStart;
+	private Vector3 touchStartPos;
+	private Vector3 direction;
 	private bool panning = false;
+	private bool touchStart;
 
 	public float minZoom = 1;
 	public float maxZoom = 8;
@@ -28,6 +30,7 @@ public class InputManager : MonoBehaviour
 	private bool isMultiTouching;
 
 	public Vector2 cameraBounds = new Vector2(5f, 5f);
+
 
 	private void Start()
 	{
@@ -40,6 +43,11 @@ public class InputManager : MonoBehaviour
 		if (Input.touchCount == 2)
 		{
 			isMultiTouching = true;
+
+			if (Input.GetTouch(0).phase == TouchPhase.Began)
+			{
+				touchStart = true;
+			}
 
 			// Calculate difference between previous distance between 2 fingers and current distance between 2 fingers
 			Touch touchZero = Input.GetTouch(0);
@@ -64,24 +72,27 @@ public class InputManager : MonoBehaviour
 		if (Input.GetMouseButtonDown(0))
 		{
 			panning = false;
-			touchStart = cam.ScreenToWorldPoint(MousePosition());
+			touchStartPos = cam.ScreenToWorldPoint(MousePosition());
 		}
-
 
 		if (Input.GetMouseButton(0))
 		{
 			// Find difference between pointer position and camera position
-			Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(MousePosition());
+			direction = touchStartPos - Camera.main.ScreenToWorldPoint(MousePosition());
 
 			// If the player lifts the finger that touched the screen first before lifting the other finger, the game would snap to the new first finger position. That is why we need to set the direction to zero briefly.
-			if (isMultiTouching && Input.touchCount < 2)
+			if ((isMultiTouching && Input.touchCount < 2) || touchStart)
 			{
-				direction = Vector2.zero;
+				direction = Vector3.zero;
+				touchStartPos = cam.ScreenToWorldPoint(MousePosition());
 				isMultiTouching = false;
+				touchStart = false;
 			}
-
-			// Move the camera
-			cam.transform.position += direction;
+			else
+			{
+				// Move the camera
+				cam.transform.position += direction;
+			}
 
 			// Clamp camera pos to bounded area
 			cam.transform.position = new Vector3(
@@ -138,11 +149,11 @@ public class InputManager : MonoBehaviour
 			return Input.mousePosition;
 		}
 
-		#if UNITY_IOS || UNITY_ANDROID
-			return Input.GetTouch(0).position;
-		#else
-			return Input.mousePosition;
-		#endif
+#if UNITY_IOS || UNITY_ANDROID
+			return Input.GetTouch(finger).position;
+#else
+		return Input.mousePosition;
+#endif
 	}
 
 	// Shifts colors of selected tile
