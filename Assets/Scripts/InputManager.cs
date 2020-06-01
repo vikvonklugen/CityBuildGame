@@ -27,7 +27,6 @@ public class InputManager : MonoBehaviour
 	public float maxZoom = 8;
 	public float mobilePinchSensitivity = 0.01f;
 	public float PCScrollSensitivity = 1f;
-	[SerializeField]
 	private bool isMultiTouching;
 
 	public Vector2 cameraBounds = new Vector2(5f, 5f);
@@ -74,7 +73,6 @@ public class InputManager : MonoBehaviour
 		{
 			panning = false;
 			touchStartPos = cam.ScreenToWorldPoint(MousePosition());
-			direction = Vector3.zero;
 		}
 
 		if (Input.GetMouseButton(0))
@@ -140,11 +138,11 @@ public class InputManager : MonoBehaviour
 	}
 
 	// Return mouse or finger position based on platform or setting
-	Vector2 MousePosition(int finger = 0)
+	Vector2 MousePosition()
 	{
 		if (controlMode == manualControlOverride.Mobile)
 		{
-			return Input.GetTouch(finger).position;
+			return Input.GetTouch(0).position;
 		}
 		else if (controlMode == manualControlOverride.PC)
 		{
