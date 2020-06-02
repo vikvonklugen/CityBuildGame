@@ -716,10 +716,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: 4b496ddd-aa43-40b8-a807-4a4ec169fc0e
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: City Game Management
+  organizationId: elias-hoste
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

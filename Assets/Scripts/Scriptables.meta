@@ -1,5 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: dc259d029a09ca24a8acd3834b125d65
+=======
+<<<<<<< HEAD:Assets/Resources/Data/Events.meta
+guid: d2cb4953abc5e0644a6a3762eaae00df
+=======
+guid: dc259d029a09ca24a8acd3834b125d65
+>>>>>>> master:Assets/Scripts/Scriptables.meta
+>>>>>>> master
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
