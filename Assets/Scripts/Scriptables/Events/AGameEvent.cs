@@ -13,7 +13,20 @@ public abstract class AGameEvent<T> : ScriptableObject
 	[TextArea]
 	private string explanation;
 
-	public void Raise (T item)
+    public string Explanation
+    {
+        get
+        {
+            return explanation;
+        }
+
+        private set
+        {
+            explanation = value;
+        }
+    }
+
+    public void Raise (T item)
 	{
 		for (int i = listeners.Count - 1; i >= 0; i--)
 			listeners[i].OnEventRaised(item);
