@@ -15,15 +15,23 @@ MonoBehaviour:
   firstName: Halfdorf
   lastName: Ironheart
   icon: {fileID: 0}
-  age: 54
+  recruitedEvent: {fileID: 0}
+  deathEvent: {fileID: 0}
+  combatEvent: {fileID: 11400000, guid: 5b94b51a23942814b957a696c3d90824, type: 2}
+  combatResultEvent: {fileID: 0}
+  upsetEvent: {fileID: 0}
+  age: 44
   faction: {fileID: 11400000, guid: c6ae969162efe4c479f6c0019a5a6925, type: 2}
   combattype: {fileID: 11400000, guid: fb9eb7720c96c604b818a68ba0200ec6, type: 2}
   grudgedFactions:
   - {fileID: 11400000, guid: f597d586e79837341b3ab22602d1c041, type: 2}
   grudgeFactionCombatModifier: 1
   recruitable: 1
-  expectedEventUsageFrequency: 7
+  expectedEventUsageFrequency: 30
   recruitedHappiness: 1
+  recruitSound: {fileID: 0}
+  deathSound: {fileID: 0}
+  upsetSound: {fileID: 0}
   currentArmor: {fileID: 11400000, guid: 2c4cc68c2b5b2cc46bd2d1194936c8af, type: 2}
   currentWeapon: {fileID: 11400000, guid: 90c79502b33c68a4b9e10c3425fe3b4e, type: 2}
   desiredArmor: {fileID: 0}

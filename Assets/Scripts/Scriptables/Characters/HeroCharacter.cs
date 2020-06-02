@@ -22,7 +22,30 @@ public class HeroCharacter : ScriptableObject
     [Tooltip("The icon/sprite representing this hero.")]
     private Sprite icon;
 
+    [Header( "Events" )]
+    [SerializeField]
+    [Tooltip("The event which happens if you recruit the hero. ")]
+    private OnRecruited recruitedEvent;
 
+    [SerializeField]
+    [Tooltip("The event which happen if the hero dies. ")]
+    private OnDeath deathEvent;
+
+    [SerializeField]
+    [Tooltip("The event which happends if the hero enters combat. ")]
+    private OnCombat combatEvent;
+
+    [SerializeField]
+    [Tooltip("The event which happens after a combat result. ")]
+    private OnCombatResult combatResultEvent;
+
+    [SerializeField]
+    [Tooltip("The event which represent the upset event of this hero. ")]
+    private OnUpset upsetEvent;
+
+
+
+    [Header("Other stuff")]
     [SerializeField]
     [Range(0,120)]
     [Tooltip("Age of the hero.")]
@@ -61,6 +84,21 @@ public class HeroCharacter : ScriptableObject
     [Range(0,5)]
     private int recruitedHappiness;
 
+    [Header("Sounds")]
+    [SerializeField]
+    [Tooltip("The sound which is played when the hero is recruited. ")]
+    private AudioClip recruitSound;
+
+    [SerializeField]
+    [Tooltip("The sound which is played when the hero is dead. ")]
+    private AudioClip deathSound;
+
+    [SerializeField]
+    [Tooltip("The sound which is played when the hero is upset. ")]
+    private AudioClip upsetSound;
+
+
+    [Header("Armor and weapons")]
     [SerializeField]
     private CharacterArmor currentArmor;
     [SerializeField]

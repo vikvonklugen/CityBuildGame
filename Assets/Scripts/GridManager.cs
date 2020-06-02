@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
@@ -13,6 +14,20 @@ public class GridManager : MonoBehaviour
 
     [SerializeField]
     private float tileSize = 1;
+
+    public float TileSize
+    {
+        get
+        {
+            return tileSize;
+        }
+
+        private set
+        {
+            tileSize = value;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,17 +46,17 @@ public class GridManager : MonoBehaviour
             {
 
                 GameObject tile = Instantiate(referenceTile, transform) as GameObject;
-                float posX = col * tileSize;
-                float posY = row * -tileSize; // <-- cartesian position system
+                float posX = col * TileSize;
+                float posY = row * -TileSize; // <-- cartesian position system
                 tile.transform.position = new Vector2(posX, posY);
             }
         }
 
         Destroy(referenceTile);
 
-        float gridWidth = cols * tileSize;
-        float gridHeight = rows * tileSize;
-        transform.position = new Vector2(gridWidth / 2 + tileSize / 2, gridHeight / 2 - tileSize / 2);
+        float gridWidth = cols * TileSize;
+        float gridHeight = rows * TileSize;
+        transform.position = new Vector2(gridWidth / 2 + TileSize / 2, gridHeight / 2 - TileSize / 2);
     }
 
     // Update is called once per frame
