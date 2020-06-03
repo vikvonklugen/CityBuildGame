@@ -1031,8 +1031,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a83143c306e83545a66dd9c967dc8d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingtypes: []
-  content: {fileID: 1418632437}
+  buildingListContent: {fileID: 1418632437}
+  buildingPanel: {fileID: 2123849679}
 --- !u!114 &1039806720
 MonoBehaviour:
   m_ObjectHideFlags: 0

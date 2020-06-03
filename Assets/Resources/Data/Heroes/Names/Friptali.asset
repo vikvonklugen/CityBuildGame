@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 392d6c5adf454a847aa8db953d51384d, type: 3}
-  m_Name: Friptale
+  m_Name: Friptali
   m_EditorClassIdentifier: 
   firstName: 
   recruitedEvent: {fileID: 0}
