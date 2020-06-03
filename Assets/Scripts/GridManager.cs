@@ -38,7 +38,7 @@ public class GridManager : MonoBehaviour
                 tile.name = tileIndex.ToString();
                 tile.layer = 8;
 
-                if (!(row == 0 || row == rows - 1 || col == 0 || col == cols - 1))
+                if (row == 0)
                 {
                     tile.GetComponent<BuildingController>().unlockedForBuilding = true;
                     Destroy(tile.transform.GetChild(0).gameObject);

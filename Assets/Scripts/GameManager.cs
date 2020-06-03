@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static int food;
+    public static int materials;
+    public static int luxuries;
+    public static int population;
+
     public Image clock;
     public float clockFillAmount;
     public GameObject eventPanel;

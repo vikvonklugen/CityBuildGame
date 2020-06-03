@@ -2,37 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName ="Building", menuName ="Building")]
+[CreateAssetMenu(fileName = "Building", menuName = "Building")]
 public class Building : ScriptableObject
 {
-    [SerializeField]
-    private string name;
-    [SerializeField]
-    private AudioClip selectedSound;
-    [SerializeField]
-    private int buildingCost;
-    [SerializeField]
-    private float timeToBuild;
-    [SerializeField]
-    private int deconstructionCost;
-    [SerializeField]
-    private int initialLevel;
+    public enum Resource { None, Food, Materials, Luxuries }
 
-    [SerializeField]
-    private bool canBeUpgraded;
+    public string name;
+    public AudioClip selectedSound;
+    public string buildingInfo;
+    public Sprite buildingSprite;
+    public int buildingCost;
+    public Resource producedResource;
+    public int resourceProducedPerTick;
+    public float timeToBuild;
+    public int initialLevel;
 
-    [SerializeField]
-    [Range(0,3)]
-    private int numberOfTimesUpgradeable;
+    public bool canBeUpgraded;
 
-    [SerializeField]
+    [Range(0, 3)]
+    public int numberOfTimesUpgradeable;
+
     public CharacterFaction[] factionsAffectedPositively;
-    [SerializeField]
     public CharacterFaction[] factionsAffectedNegatively;
 
-    [SerializeField]
     public int factionPositivelyModifier;
-    [SerializeField]
     public int factionNegativelyModifier;
-
 }
