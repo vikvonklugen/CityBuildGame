@@ -39,6 +39,7 @@ public class InputManager : MonoBehaviour
 	private void Start()
 	{
 		cam = Camera.main;
+		cam.transform.position = new Vector3(0, 0, -10f);
 	}
 
 	void Update()

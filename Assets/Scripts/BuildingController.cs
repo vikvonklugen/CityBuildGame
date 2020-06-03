@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class BuildingController : MonoBehaviour
 {
-    private float buildingSize;
     public Building building;
 
     [Header("Building events.")]
