@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 383a894e360cde94e9092eb548c66591
+guid: 76a1b547baabf4e43b5f668a41ef755f
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Alice
+  fontName: Quando
   fontNames:
-  - Alice
+  - Quando
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

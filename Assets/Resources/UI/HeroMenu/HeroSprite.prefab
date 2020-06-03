@@ -185,8 +185,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Haldorf the Paladin
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 63312d2536271a7408d74addea736d51, type: 2}
-  m_sharedMaterial: {fileID: -2101311266784090468, guid: 63312d2536271a7408d74addea736d51,
+  m_fontAsset: {fileID: 11400000, guid: 6a69f6b4931ac244e9f04ae279daccd2, type: 2}
+  m_sharedMaterial: {fileID: -5252520768336184745, guid: 6a69f6b4931ac244e9f04ae279daccd2,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -212,8 +212,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 12
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
