@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 2df6d1e1bfbc3e740870294b13c11111
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - icon: {instanceID: 0}
+  - faction: {instanceID: 0}
+  - combattype: {instanceID: 0}
+  - currentArmor: {fileID: 11400000, guid: 2c4cc68c2b5b2cc46bd2d1194936c8af, type: 2}
+  - currentWeapon: {fileID: 11400000, guid: 90c79502b33c68a4b9e10c3425fe3b4e, type: 2}
+  - desiredArmor: {instanceID: 0}
+  - desiredWeapon: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

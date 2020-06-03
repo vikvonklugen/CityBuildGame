@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
@@ -46,7 +47,6 @@ public class GridManager : MonoBehaviour
         }
 
         Destroy(referenceTile);
-
         float gridWidth = cols * tileSize;
         float gridHeight = rows * tileSize;
         transform.position = new Vector2(-(gridWidth / 2 - tileSize / 2), gridHeight / 2 - tileSize / 2);
