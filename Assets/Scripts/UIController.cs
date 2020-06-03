@@ -6,19 +6,21 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public Object[] buildingtypes;
-    public Transform content;
+    private Object[] buildingtypes;
+
+    public Transform buildingListContent;
+    public GameObject buildingPanel;
 
     void Start()
     {
         buildingtypes = Resources.LoadAll("Data/Buildings", typeof(Building));
 
-        RectTransform rectTransform = content.GetComponent<RectTransform>();
+        RectTransform rectTransform = buildingListContent.GetComponent<RectTransform>();
         rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, 550 - (Mathf.Ceil(buildingtypes.Length / 2f) * 500f));
 
         foreach (Building buildingtype in buildingtypes)
         {
-            GameObject building = (GameObject)Instantiate(Resources.Load("BuildingUIButtonItem"), content);
+            GameObject building = (GameObject)Instantiate(Resources.Load("BuildingUIButtonItem"), buildingListContent);
             GameObject buildingButton = building.transform.GetChild(0).gameObject;
             GameObject buildingName = building.transform.GetChild(1).gameObject;
             GameObject buildingInfo = building.transform.GetChild(2).gameObject;
@@ -45,6 +47,7 @@ public class UIController : MonoBehaviour
         if (InputManager.selectedTile.GetComponent<BuildingController>().buildable)
         {
             InputManager.selectedTile.GetComponent<SpriteRenderer>().sprite = building.buildingSprite;
+            buildingPanel.SetActive(false);
         }
     }
 }

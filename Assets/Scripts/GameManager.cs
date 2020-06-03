@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public GameObject eventPanel;
     public bool eventProcessed;
 
+    private bool clockAnimationFinished;
+
     void Start()
     {
         StartCoroutine(TickSystem());
@@ -36,6 +38,9 @@ public class GameManager : MonoBehaviour
             clockFillAmount += 0.25f;
             StartCoroutine(SetClock(clockFillAmount, 0.01f));
 
+            yield return new WaitUntil(() => clockAnimationFinished);
+            clockAnimationFinished = false;
+
             if (clockFillAmount == 1)
             {
                 //Do event stuff
@@ -50,6 +55,7 @@ public class GameManager : MonoBehaviour
             else if (clockFillAmount == 0.5f)
             {
                 //Grow population
+                population += 5;
             }
         }
     }
@@ -57,16 +63,19 @@ public class GameManager : MonoBehaviour
     IEnumerator SetClock(float target, float increment)
     {
         float _target = Mathf.Clamp(target + increment, 0, 1);
+        float _increment = increment;
         while (clock.fillAmount < _target)
         {
-            clock.fillAmount += increment;
+            clock.fillAmount += _increment;
+            _increment += increment / 5f;
             yield return new WaitForEndOfFrame();
         }
         while (clock.fillAmount > target)
         {
-            clock.fillAmount -= increment / 5f;
+            clock.fillAmount -= _increment / 5f;
             yield return new WaitForEndOfFrame();
         }
+        clockAnimationFinished = true;
     }
 
     IEnumerator ResetClock()
