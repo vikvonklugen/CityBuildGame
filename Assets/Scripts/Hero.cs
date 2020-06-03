@@ -5,7 +5,7 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
 
-    private HeroCharacter hero;
+    //private HeroCharacter hero;
 
     public void EnterEvent ()
     {

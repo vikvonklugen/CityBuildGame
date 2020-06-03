@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "Hero", menuName = "Hero", order = 101)]
-public class Hero : ScriptableObject
+public class SciptableHero : ScriptableObject
 {
     [SerializeField]
     private string backGround;
