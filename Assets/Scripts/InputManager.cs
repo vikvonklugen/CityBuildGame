@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class InputManager : MonoBehaviour
 	private Vector3 direction;
 	private bool panning = false;
 	private bool touchStart;
+	private bool interactingWithGUI;
 
 	public float minZoom = 1;
 	public float maxZoom = 8;
@@ -71,46 +73,53 @@ public class InputManager : MonoBehaviour
 		// Initialise some values on initial mouse press
 		if (Input.GetMouseButtonDown(0))
 		{
+			if (EventSystem.current.IsPointerOverGameObject())
+			{
+				interactingWithGUI = true;
+			}
 			panning = false;
 			touchStartPos = cam.ScreenToWorldPoint(MousePosition());
 		}
 
 		if (Input.GetMouseButton(0))
 		{
-			// Find difference between pointer position and camera position
-			direction = touchStartPos - Camera.main.ScreenToWorldPoint(MousePosition());
-
-			// If the player lifts the finger that touched the screen first before lifting the other finger, the game would snap to the new first finger position. That is why we need to set the direction to zero briefly.
-			if ((isMultiTouching && Input.touchCount < 2) || touchStart)
+			if (!interactingWithGUI)
 			{
-				direction = Vector3.zero;
-				touchStartPos = cam.ScreenToWorldPoint(MousePosition());
-				isMultiTouching = false;
-				touchStart = false;
-			}
-			else
-			{
-				// Move the camera
-				cam.transform.position += direction;
-			}
+				// Find difference between pointer position and camera position
+				direction = touchStartPos - Camera.main.ScreenToWorldPoint(MousePosition());
 
-			// Clamp camera pos to bounded area
-			cam.transform.position = new Vector3(
-				Mathf.Clamp(cam.transform.position.x, -cameraBounds.x, cameraBounds.x),
-				Mathf.Clamp(cam.transform.position.y, -cameraBounds.y, cameraBounds.y),
-				-10f);
+				// If the player lifts the finger that touched the screen first before lifting the other finger, the game would snap to the new first finger position. That is why we need to set the direction to zero briefly.
+				if ((isMultiTouching && Input.touchCount < 2) || touchStart)
+				{
+					direction = Vector3.zero;
+					touchStartPos = cam.ScreenToWorldPoint(MousePosition());
+					isMultiTouching = false;
+					touchStart = false;
+				}
+				else
+				{
+					// Move the camera
+					cam.transform.position += direction;
+				}
 
-			// Check if player is panning or clicking
-			if (!panning)
-			{
-				panning = direction.magnitude > 0.1f;
+				// Clamp camera pos to bounded area
+				cam.transform.position = new Vector3(
+					Mathf.Clamp(cam.transform.position.x, -cameraBounds.x, cameraBounds.x),
+					Mathf.Clamp(cam.transform.position.y, -cameraBounds.y, cameraBounds.y),
+					-10f);
+
+				// Check if player is panning or clicking
+				if (!panning)
+				{
+					panning = direction.magnitude > 0.1f;
+				}
 			}
 		}
 
 		// Select a tile if player wasn't panning and start color animation
 		if (Input.GetMouseButtonUp(0))
 		{
-			if (!panning)
+			if (!panning && !interactingWithGUI)
 			{
 				Vector2 mousePos = cam.ScreenToWorldPoint(MousePosition());
 				RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -128,6 +137,8 @@ public class InputManager : MonoBehaviour
 					StartCoroutine(colorShifter);
 				}
 			}
+
+			interactingWithGUI = false;
 		}
 	}
 
