@@ -8,6 +8,8 @@ public class InputManager : MonoBehaviour
 {
 	public Camera cam;
 
+	public GameObject buildPanel;
+
 	public enum manualControlOverride { Mobile, PC }
 	public manualControlOverride controlMode;
 
@@ -46,7 +48,7 @@ public class InputManager : MonoBehaviour
 		{
 			isMultiTouching = true;
 
-			if (Input.GetTouch(0).phase == TouchPhase.Began)
+			if (Input.GetTouch(0).phase == TouchPhase.Began || Input.GetTouch(1).phase == TouchPhase.Began)
 			{
 				touchStart = true;
 			}
@@ -125,21 +127,54 @@ public class InputManager : MonoBehaviour
 				RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 				if (hit)
 				{
-					// Stop previous running selection coroutine and reset their color
-					if (selectedTile != null)
+					Collider2D tile = hit.collider;
+					BuildingController buildingController = tile.GetComponent<BuildingController>();
+					if (buildingController.unlockedForBuilding && selectedTile != tile.gameObject)
 					{
-						StopCoroutine(colorShifter);
-						selectedTile.GetComponent<SpriteRenderer>().color = Color.white;
-					}
+						// Activate build menu if nothing is built yet
+						if (buildingController.building == null)
+						{
+							buildPanel.SetActive(true);
+						}
 
-					// Start new selection coroutine
-					colorShifter = ColorShifter(hit.collider.gameObject);
-					StartCoroutine(colorShifter);
+						// Stop previous running selection coroutine and reset their color
+						if (selectedTile != null)
+						{
+							StopCoroutine(colorShifter);
+							selectedTile.GetComponent<SpriteRenderer>().color = Color.white;
+						}
+
+						// Start new selection coroutine
+						colorShifter = ColorShifter(tile.gameObject);
+						StartCoroutine(colorShifter);
+					}
+					else
+					{
+						Deselect();
+					}
+			}
+				else
+				{
+					Deselect();
 				}
 			}
 
 			interactingWithGUI = false;
 		}
+	}
+
+	void Deselect()
+	{
+		buildPanel.SetActive(false);
+
+		// Stop previous running selection coroutine and reset their color
+		if (selectedTile != null)
+		{
+			StopCoroutine(colorShifter);
+			selectedTile.GetComponent<SpriteRenderer>().color = Color.white;
+		}
+
+		selectedTile = null;
 	}
 
 	// Zoom the camera

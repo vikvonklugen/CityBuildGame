@@ -99,3 +99,5 @@ MonoBehaviour:
   onBuildingDestroyedEvent: {fileID: 0}
   onBuildingUpgraded: {fileID: 0}
   onBuildingProducing: {fileID: 0}
+  buildable: 0
+  unlockedForBuilding: 0
