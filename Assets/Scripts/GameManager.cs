@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
         eventObjects.CopyTo(events, 0);
 
         random = new System.Random();
+        uiController.UpdateHUD();
     }
 
     public void ProcessEvent()
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(7.5f);
 
             clockFillAmount += 0.25f;
             StartCoroutine(uiController.SetClock(clockFillAmount, 0.01f));
@@ -75,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     void PopulationTick()
     {
-        resources["Population"] += 5;
+        resources["Population"] += resourceGrowth["Population"];
         EveryTick();
     }
 
@@ -92,7 +93,6 @@ public class GameManager : MonoBehaviour
         resources["Food"] += resourceGrowth["Food"];
         resources["Materials"] += resourceGrowth["Materials"];
         resources["Luxuries"] += resourceGrowth["Luxuries"];
-        resources["Population"] += resourceGrowth["Population"];
 
         uiController.UpdateHUD();
     }
