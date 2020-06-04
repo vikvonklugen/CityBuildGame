@@ -24,7 +24,7 @@ public class GridManager : MonoBehaviour
         //Camera.current.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y, -10));
     }
 
-    private void GenerateGrid ()
+    private void GenerateGrid()
     {
         int tileIndex = 0;
         GameObject referenceTile = (GameObject)Instantiate(Resources.Load("placeholderTile"));
@@ -33,11 +33,17 @@ public class GridManager : MonoBehaviour
         {
             for (int col = 0; col < cols; col++)
             {
-
                 GameObject tile = Instantiate(referenceTile, transform) as GameObject;
                 tile.AddComponent<BoxCollider2D>();
                 tile.name = tileIndex.ToString();
                 tile.layer = 8;
+
+                if (row == 0)
+                {
+                    tile.GetComponent<BuildingController>().unlockedForBuilding = true;
+                    Destroy(tile.transform.GetChild(0).gameObject);
+                }
+
                 float posX = col * tileSize;
                 float posY = row * -tileSize; // <-- cartesian position system
                 tile.transform.position = new Vector2(posX, posY);

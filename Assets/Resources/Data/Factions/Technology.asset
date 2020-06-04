@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18622f99f583a00408d69d0f758ca256, type: 3}
   m_Name: Technology
   m_EditorClassIdentifier: 
-  name: 
+  name: Technology
   backGround: 
   naturalAllies: []
   sameFactionModifier: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   canFlee: 0
   canBeTurned: 0
   canBeRevived: 0
+  canBeRecruited: 0
