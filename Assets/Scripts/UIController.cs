@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
+using System.Runtime.InteropServices;
 using TMPro;
-using UnityEditor.iOS;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,22 +16,31 @@ public class UIController : MonoBehaviour
     public GameObject upgradePanel;
     public GameObject eventPanel;
     public GameObject topLevelHUD;
+    public GameObject heroHireScreen;
+    public GameObject heroSelectScreen;
 
     public Sprite emptyTileSprite;
 
     private Button upgradeButton;
     private Button destroyButton;
 
+    public Sprite[] combatModifierIcons;
+    private int heroHireScreenIndex = 0;
     private Transform resourceBar;
+    private Transform heroListContent;
+    private Transform buildingListContent;
     private Image clock;
     public static bool clockAnimationFinished;
 
     void Start()
     {
+        UpdateHeroHireScreen();
+
         resourceBar = topLevelHUD.transform.GetChild(0);
         clock = topLevelHUD.transform.GetChild(1).gameObject.GetComponent<Image>();
 
-        Transform buildingListContent = buildPanel.transform.GetChild(1).GetChild(0).GetChild(0);
+        heroListContent = heroSelectScreen.transform.GetChild(0).GetChild(0);
+        buildingListContent = buildPanel.transform.GetChild(1).GetChild(0).GetChild(0);
 
         upgradeButton = upgradePanel.transform.GetChild(1).gameObject.GetComponent<Button>();
         destroyButton = upgradePanel.transform.GetChild(2).gameObject.GetComponent<Button>();
@@ -195,10 +203,10 @@ public class UIController : MonoBehaviour
         upgradePanel.SetActive(true);
     }
 
-    public void DisplayEvent(Event currentevent)
+    public void DisplayEvent()
     {
         TextMeshProUGUI eventTextPanel = eventPanel.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        eventTextPanel.text = currentevent.description;
+        eventTextPanel.text = GameManager.currentEvent.description;
 
 
         upgradePanel.SetActive(false);
@@ -228,13 +236,135 @@ public class UIController : MonoBehaviour
             GameObject resourceIndicator = (GameObject)Instantiate(Resources.Load("ResourceIndicator"), resourceBar);
             TextMeshProUGUI resourceAmount = resourceIndicator.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
             Image resourceIcon = resourceIndicator.transform.GetChild(1).gameObject.GetComponent<Image>();
-            //TextMeshProUGUI resourceChange = resourceIndicator.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
 
             GameManager.resources[resourceType.name] = resourceType.startAmount;
 
             resourceAmount.text = GameManager.resources[resourceType.name].ToString();
             resourceIcon.sprite = resourceType.resourceIcon;
         }
+    }
+
+    public void UpdateHeroHireScreen()
+    {
+        Transform buttons = heroHireScreen.transform.GetChild(0);
+        Button backButton = buttons.GetChild(0).gameObject.GetComponent<Button>();
+        Button nextButton = buttons.GetChild(1).gameObject.GetComponent<Button>();
+        Button hireButton = buttons.GetChild(2).gameObject.GetComponent<Button>();
+
+        Transform hero = heroHireScreen.transform.GetChild(1);
+        TextMeshProUGUI heroName = hero.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        Image heroSprite = hero.GetChild(1).gameObject.GetComponent<Image>();
+        TextMeshProUGUI heroInfo = hero.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
+
+        heroHireScreenIndex = Mathf.Clamp(heroHireScreenIndex, 0, HeroManager.recruitableHeroes.Count);
+
+        HeroManager.Hero _hero = HeroManager.recruitableHeroes[heroHireScreenIndex];
+        heroName.text = _hero.heroName.name + " the " + _hero.type.heroType;
+        heroSprite.sprite = _hero.type.icon;
+        heroInfo.text = "Faction: " + _hero.type.faction.name + "\n" + _hero.heroName.description + "\nCost: " + _hero.heroName.recruitmentCost;
+
+        if (GameManager.currentEvent != null)
+        {
+            heroSprite.transform.GetChild(0).gameObject.SetActive(true);
+            heroSprite.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Image>().sprite = GetCombatModifierIcon(_hero);
+        }
+        else
+        {
+            heroSprite.transform.GetChild(0).gameObject.SetActive(false);
+        }
+
+        if (heroHireScreenIndex == 0)
+        {
+            backButton.interactable = false;
+        }
+        else
+        {
+            backButton.interactable = true;
+        }
+
+        if (heroHireScreenIndex == HeroManager.recruitableHeroes.Count - 1)
+        {
+            nextButton.interactable = false;
+        }
+        else
+        {
+            nextButton.interactable = true;
+        }
+
+        if (GameManager.resources["Luxuries"] < _hero.heroName.recruitmentCost)
+        {
+            hireButton.interactable = false;
+        }
+        else
+        {
+            hireButton.interactable = true;
+        }
+    }
+
+    public void UpdateHeroSelectScreen()
+    {
+        RectTransform rectTransform = heroListContent.GetComponent<RectTransform>();
+        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, Mathf.Ceil(HeroManager.recruitedHeroes.Count / 2f) * 475f);
+
+        foreach (GameObject hiredHero in HeroManager.recruitedHeroes)
+        {
+            HeroManager.Hero hero = hiredHero.GetComponent<HeroController>().hero;
+            hiredHero.GetComponent<Image>().sprite = hero.type.icon;
+            hiredHero.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = hero.heroName.name + " the " + hero.type.heroType;
+
+            if (GameManager.currentEvent != null)
+            {
+                hiredHero.transform.GetChild(1).gameObject.SetActive(true);
+                hiredHero.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Image>().sprite = GetCombatModifierIcon(hero);
+            }
+            else
+            {
+                hiredHero.transform.GetChild(1).gameObject.SetActive(false);
+            }
+        }
+
+    }
+
+    Sprite GetCombatModifierIcon(HeroManager.Hero hero)
+    {
+        Sprite combatModifierIcon;
+        CharacterFaction enemyFaction = GameManager.currentEvent.enemyType;
+        CharacterFaction heroFaction = hero.type.faction;
+
+        if (heroFaction.strongAgainst == enemyFaction)
+        {
+            combatModifierIcon = combatModifierIcons[2];
+        }
+        else if (heroFaction.weakAgainst == enemyFaction)
+        {
+            combatModifierIcon = combatModifierIcons[0];
+        }
+        else
+        {
+            Debug.Log(heroFaction.name + ", " + enemyFaction.name + ", neutral");
+            combatModifierIcon = combatModifierIcons[1];
+        }
+        return combatModifierIcon;
+    }
+
+    public void HireHero()
+    {
+        GameObject hiredHero = (GameObject)Instantiate(Resources.Load("UI/HeroMenu/HeroSprite"), heroListContent);
+        hiredHero.GetComponent<HeroController>().hero = HeroManager.recruitableHeroes[heroHireScreenIndex];
+        HeroManager.recruitedHeroes.Add(hiredHero);
+        UpdateHeroSelectScreen();
+    }
+
+    public void NextHero()
+    {
+        heroHireScreenIndex++;
+        UpdateHeroHireScreen();
+    }
+
+    public void PreviousHero()
+    {
+        heroHireScreenIndex--;
+        UpdateHeroHireScreen();
     }
 
     public IEnumerator SetClock(float target, float increment)
@@ -262,6 +392,5 @@ public class UIController : MonoBehaviour
             clock.fillAmount -= 0.05f;
             yield return new WaitForEndOfFrame();
         }
-
     }
 }

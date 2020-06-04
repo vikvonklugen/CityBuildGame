@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c687f2fd64213244966767e8ab13917, type: 3}
   m_Name: Event17
   m_EditorClassIdentifier: 
-  description: 
-  enemyType: {fileID: 0}
+  description: Lord, a necromancer was spotted raising the dead and making the skeletons
+    dance together. They are far better dancers than us. Unacceptable!
+  enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
   rewards: []

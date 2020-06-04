@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2df6d1e1bfbc3e740870294b13c11111, type: 3}
   m_Name: Chemist
   m_EditorClassIdentifier: 
-  heroType: 
-  icon: {fileID: 0}
-  age: 0
-  faction: {fileID: 0}
+  heroType: Chemist
+  icon: {fileID: 21300000, guid: 0e3b1c2a473d173478e9ec149086a069, type: 3}
+  age: 39
+  faction: {fileID: 11400000, guid: 16e38da664f555c4ba55a2940fe80401, type: 2}
   combattype: {fileID: 0}
-  grudgedFactions: []
+  grudgedFactions:
+  - {fileID: 11400000, guid: c6ae969162efe4c479f6c0019a5a6925, type: 2}
   grudgeFactionCombatModifier: 0
   recruitable: 0
   expectedEventUsageFrequency: 0

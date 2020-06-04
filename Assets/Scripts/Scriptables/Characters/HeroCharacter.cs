@@ -12,75 +12,73 @@ public class HeroCharacter : ScriptableObject
 
     [SerializeField]
     [Tooltip("Type of the hero.")]
-    private string heroType;
+    public string heroType;
 
     [SerializeField]
     [Tooltip("The icon/sprite representing this hero.")]
-    private Sprite icon;
-
+    public Sprite icon;
 
     [Header("Other stuff")]
     [SerializeField]
     [Range(0,120)]
     [Tooltip("Age of the hero.")]
-    private int age;
+    public int age;
 
     [SerializeField]
     [Tooltip("The faction of this hero.")]
-    private CharacterFaction faction;
+    public CharacterFaction faction;
 
     [SerializeField]
     [Tooltip("The combat type of this hero.")]
-    private CharacterCombatType combattype;
+    public CharacterCombatType combattype;
 
     [SerializeField]
     [Tooltip("The factions the hero have personal grudges against:")]
-    private CharacterFaction[] grudgedFactions;
+    public CharacterFaction[] grudgedFactions;
 
     [SerializeField]
     [Tooltip("The combat modifier the hero have against the factions he have grudges against.")]
     [Range(-2,2)]
-    private int grudgeFactionCombatModifier;
+    public int grudgeFactionCombatModifier;
 
 
     [SerializeField]
     [Tooltip("Is this hero recruitable?")]
-    private bool recruitable;
+    public bool recruitable;
 
     [SerializeField]
     [Tooltip("Expected use frequency once hired. The number indicates how much action the hero expects for every N events with combat." +
         "For example, a number of 7 will indicate the hero expects to be used once or more every 7th event with combat. Failing to do so, will make the hero upset over time.")]
     [Range(1,100)]
-    private int expectedEventUsageFrequency;
+    public int expectedEventUsageFrequency;
 
     [SerializeField]
     [Tooltip("How content the hero is when recruited freshly.")]
     [Range(-10,10)]
-    private int recruitedHappiness;
+    public int recruitedHappiness;
 
     [Header("Sounds")]
     [SerializeField]
     [Tooltip("The sound which is played when the hero is recruited. ")]
-    private AudioClip recruitSound;
+    public AudioClip recruitSound;
 
     [SerializeField]
     [Tooltip("The sound which is played when the hero is dead. ")]
-    private AudioClip deathSound;
+    public AudioClip deathSound;
 
     [SerializeField]
     [Tooltip("The sound which is played when the hero is upset. ")]
-    private AudioClip upsetSound;
+    public AudioClip upsetSound;
 
 
     [Header("Armor and weapons")]
     [SerializeField]
-    private CharacterArmor currentArmor;
+    public CharacterArmor currentArmor;
     [SerializeField]
-    private CharacterWeapon currentWeapon;
+    public CharacterWeapon currentWeapon;
 
     [SerializeField]
-    private CharacterArmor desiredArmor;
+    public CharacterArmor desiredArmor;
     [SerializeField]
-    private CharacterWeapon desiredWeapon;
-
+    public CharacterWeapon desiredWeapon;
 }

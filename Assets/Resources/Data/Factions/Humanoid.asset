@@ -12,15 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18622f99f583a00408d69d0f758ca256, type: 3}
   m_Name: Humanoid
   m_EditorClassIdentifier: 
-  name: Humanoid
-  backGround: 
-  naturalAllies: []
-  sameFactionModifier: 0
-  naturalEnemiesDislikeModifier: 0
-  naturalEnemies: []
   icon: {fileID: 0}
-  canDie: 1
-  canFlee: 1
-  canBeTurned: 1
-  canBeRevived: 1
-  canBeRecruited: 0
+  strongAgainst: {fileID: 11400000, guid: 16e38da664f555c4ba55a2940fe80401, type: 2}
+  weakAgainst: {fileID: 11400000, guid: 4b8deced264a71f42b29fbe29c5bf705, type: 2}

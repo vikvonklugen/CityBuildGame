@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
     };
 
     public UIController uiController;
+    public HeroManager heroManager;
+
+    public static Event currentEvent;
 
     private Event[] events;
     private float clockFillAmount;
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSecondsRealtime(7.5f);
+            yield return new WaitForSecondsRealtime(0.5f);
 
             clockFillAmount += 0.25f;
             StartCoroutine(uiController.SetClock(clockFillAmount, 0.01f));
@@ -66,6 +69,7 @@ public class GameManager : MonoBehaviour
 
                 yield return new WaitUntil(() => eventProcessed);
                 eventProcessed = false;
+                currentEvent = null;
             }
             else if (clockFillAmount == 0.5f)
             {
@@ -84,12 +88,16 @@ public class GameManager : MonoBehaviour
     {
         EveryTick();
 
-        Event currentevent = events[random.Next(0, events.Length)];
-        uiController.DisplayEvent(currentevent);
+        currentEvent = events[random.Next(0, events.Length)];
+        uiController.DisplayEvent();
+        uiController.UpdateHeroSelectScreen();
+        uiController.UpdateHeroHireScreen();
     }
 
     void EveryTick()
     {
+        heroManager.AddRecruitableHero();
+        uiController.UpdateHeroHireScreen();
         resources["Food"] += resourceGrowth["Food"];
         resources["Materials"] += resourceGrowth["Materials"];
         resources["Luxuries"] += resourceGrowth["Luxuries"];

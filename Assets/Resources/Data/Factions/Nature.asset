@@ -12,15 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18622f99f583a00408d69d0f758ca256, type: 3}
   m_Name: Nature
   m_EditorClassIdentifier: 
-  name: Nature
-  backGround: 
-  naturalAllies: []
-  sameFactionModifier: 0
-  naturalEnemiesDislikeModifier: 0
-  naturalEnemies: []
   icon: {fileID: 0}
-  canDie: 0
-  canFlee: 0
-  canBeTurned: 0
-  canBeRevived: 0
-  canBeRecruited: 0
+  strongAgainst: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
+  weakAgainst: {fileID: 11400000, guid: f597d586e79837341b3ab22602d1c041, type: 2}

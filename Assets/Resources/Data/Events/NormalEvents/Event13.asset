@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c687f2fd64213244966767e8ab13917, type: 3}
   m_Name: Event13
   m_EditorClassIdentifier: 
-  description: 
-  enemyType: {fileID: 0}
+  description: Lord, imps and fairies keep casting spells where we say the opposite
+    of what we meant. My mother thinks I hate her. Please help!
+  enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
   rewards: []
