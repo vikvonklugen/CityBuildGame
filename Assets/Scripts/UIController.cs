@@ -79,6 +79,13 @@ public class UIController : MonoBehaviour
             buildingController.productionPerTick = building.resourceProducedPerTick;
             buildingController.returnedMaterialsOnDestroy += (int)Mathf.Floor(building.buildingCost / 2f);
             InputManager.selectedTile.GetComponent<SpriteRenderer>().sprite = building.buildingSprite;
+
+            if (building.producedResource != AResource.Resource.Seconds && building.producedResource != AResource.Resource.None)
+            {
+                GameManager.resourceGrowth[building.producedResource.ToString()] += buildingController.productionPerTick;
+            }
+
+            UpdateHUD();
             buildPanel.SetActive(false);
             UpdateUpgradeMenu(buildingController);
         }
@@ -92,6 +99,14 @@ public class UIController : MonoBehaviour
         InputManager.selectedTile.GetComponent<SpriteRenderer>().sprite = emptyTileSprite;
         buildingController.building = null;
         buildingController.buildable = true;
+        buildingController.level = 0;
+
+        if (building.producedResource != AResource.Resource.Seconds && building.producedResource != AResource.Resource.None)
+        {
+            GameManager.resourceGrowth[building.producedResource.ToString()] -= buildingController.productionPerTick;
+        }
+
+        UpdateHUD();
         upgradePanel.SetActive(false);
         inputManager.Deselect();
     }
@@ -102,8 +117,15 @@ public class UIController : MonoBehaviour
         Building building = buildingController.building;
         buildingController.productionPerTick += building.upgrades[buildingController.level].productionBoost;
         buildingController.returnedMaterialsOnDestroy += (int)Mathf.Floor(building.upgrades[buildingController.level].materialCost / 2f);
+
+        if (building.producedResource != AResource.Resource.Seconds && building.producedResource != AResource.Resource.None)
+        {
+            GameManager.resourceGrowth[building.producedResource.ToString()] += building.upgrades[buildingController.level].productionBoost;
+        }
+
         buildingController.level++;
         UpdateUpgradeMenu(buildingController);
+        UpdateHUD();
     }
 
     public void ActivateBuildMenu(RaycastHit2D hit)
@@ -141,7 +163,7 @@ public class UIController : MonoBehaviour
         TextMeshProUGUI upgradeInfo = upgradeTextPanel.transform.GetChild(3).gameObject.GetComponent<TextMeshProUGUI>();
 
         buildingName.text = buildingController.building.name;
-        if (buildingController.building.producedResource != Building.Resource.None)
+        if (buildingController.building.producedResource != AResource.Resource.None)
         {
             productionInfo.text = buildingController.productionPerTick.ToString() + " " + buildingController.building.producedResource + "/tick";
         }
@@ -173,8 +195,12 @@ public class UIController : MonoBehaviour
         upgradePanel.SetActive(true);
     }
 
-    public void GenerateEvent()
+    public void DisplayEvent(Event currentevent)
     {
+        TextMeshProUGUI eventTextPanel = eventPanel.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        eventTextPanel.text = currentevent.description;
+
+
         upgradePanel.SetActive(false);
         buildPanel.SetActive(false);
         eventPanel.SetActive(true);
@@ -182,21 +208,31 @@ public class UIController : MonoBehaviour
 
     public void UpdateHUD()
     {
+        string[] resources = new string[] { "Food", "Materials", "Luxuries", "Population" };
 
+        for (int i = 0; i < 4; i++)
+        {
+            TextMeshProUGUI resourceText = topLevelHUD.transform.GetChild(0).GetChild(i).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI growthText = topLevelHUD.transform.GetChild(0).GetChild(i).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
+
+            resourceText.text = GameManager.resources[resources[i]].ToString();
+            growthText.text = "+" + GameManager.resourceGrowth[resources[i]].ToString();
+        }
     }
 
     public void AddResourceIndicators()
     {
-
         resourceTypes = Resources.LoadAll("Data/Resources", typeof(AResource));
         foreach (AResource resourceType in resourceTypes)
         {
             GameObject resourceIndicator = (GameObject)Instantiate(Resources.Load("ResourceIndicator"), resourceBar);
             TextMeshProUGUI resourceAmount = resourceIndicator.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
             Image resourceIcon = resourceIndicator.transform.GetChild(1).gameObject.GetComponent<Image>();
-            TextMeshProUGUI resourceChange = resourceIndicator.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
+            //TextMeshProUGUI resourceChange = resourceIndicator.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
 
-            resourceAmount.text = resourceType.startAmount.ToString();
+            GameManager.resources[resourceType.name] = resourceType.startAmount;
+
+            resourceAmount.text = GameManager.resources[resourceType.name].ToString();
             resourceIcon.sprite = resourceType.resourceIcon;
         }
     }

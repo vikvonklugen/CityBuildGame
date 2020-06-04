@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Resource", menuName = "Resource")]
 public class AResource : ScriptableObject
 {
+    public enum Resource { None, Food, Materials, Luxuries, Seconds }
+
     [SerializeField]
     public string name;
 

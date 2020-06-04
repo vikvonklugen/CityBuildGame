@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18622f99f583a00408d69d0f758ca256, type: 3}
   m_Name: Humanoid
   m_EditorClassIdentifier: 
-  name: 
+  name: Humanoid
   backGround: 
   naturalAllies: []
   sameFactionModifier: 0

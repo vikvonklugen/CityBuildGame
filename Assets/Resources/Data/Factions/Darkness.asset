@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18622f99f583a00408d69d0f758ca256, type: 3}
   m_Name: Darkness
   m_EditorClassIdentifier: 
-  name: 
+  name: Darkness
   backGround: 
   naturalAllies: []
   sameFactionModifier: 0
