@@ -1,19 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
 	public Camera cam;
-
-	public GameObject buildPanel;
+	public UIController uiController;
 
 	public enum manualControlOverride { Mobile, PC }
 	public manualControlOverride controlMode;
-
-	public LayerMask clickableObjects;
 
 	public float colorTransitionSpeed = 0.02f;
 	public Color flashColor = Color.gray;
@@ -128,32 +127,8 @@ public class InputManager : MonoBehaviour
 				RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 				if (hit)
 				{
-					Collider2D tile = hit.collider;
-					BuildingController buildingController = tile.GetComponent<BuildingController>();
-					if (buildingController.unlockedForBuilding && selectedTile != tile.gameObject)
-					{
-						// Activate build menu if nothing is built yet
-						if (buildingController.building == null)
-						{
-							buildPanel.SetActive(true);
-						}
-
-						// Stop previous running selection coroutine and reset their color
-						if (selectedTile != null)
-						{
-							StopCoroutine(colorShifter);
-							selectedTile.GetComponent<SpriteRenderer>().color = Color.white;
-						}
-
-						// Start new selection coroutine
-						colorShifter = ColorShifter(tile.gameObject);
-						StartCoroutine(colorShifter);
-					}
-					else
-					{
-						Deselect();
-					}
-			}
+					uiController.ActivateBuildMenu(hit);
+				}
 				else
 				{
 					Deselect();
@@ -164,9 +139,24 @@ public class InputManager : MonoBehaviour
 		}
 	}
 
-	void Deselect()
+	public void Select(RaycastHit2D hit)
 	{
-		buildPanel.SetActive(false);
+		// Stop previous running selection coroutine and reset their color
+		if (selectedTile != null)
+		{
+			StopCoroutine(colorShifter);
+			selectedTile.GetComponent<SpriteRenderer>().color = Color.white;
+		}
+
+		// Start new selection coroutine
+		colorShifter = ColorShifter(hit.collider.gameObject);
+		StartCoroutine(colorShifter);
+	}
+
+	public void Deselect()
+	{
+		uiController.buildPanel.SetActive(false);
+		uiController.upgradePanel.SetActive(false);
 
 		// Stop previous running selection coroutine and reset their color
 		if (selectedTile != null)

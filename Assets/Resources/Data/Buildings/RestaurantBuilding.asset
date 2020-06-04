@@ -15,14 +15,13 @@ MonoBehaviour:
   name: Restaurant
   selectedSound: {fileID: 0}
   buildingInfo: Produces luxuries, which allow you to hire heroes
-  buildingSprite: {fileID: 0}
+  buildingSprite: {fileID: 21300000, guid: 6fdbff886f0bb144a8e74bf44c3e6008, type: 3}
   buildingCost: 0
   producedResource: 3
   resourceProducedPerTick: 1
   timeToBuild: 0
   initialLevel: 0
-  canBeUpgraded: 0
-  numberOfTimesUpgradeable: 0
+  upgrades: []
   factionsAffectedPositively: []
   factionsAffectedNegatively: []
   factionPositivelyModifier: 0

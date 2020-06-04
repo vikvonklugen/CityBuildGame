@@ -5,20 +5,24 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static int food;
-    public static int materials;
-    public static int luxuries;
-    public static int population;
 
-    public Image clock;
-    public float clockFillAmount;
-    public GameObject eventPanel;
-    public bool eventProcessed;
+    public static Dictionary<string, int> resources = new Dictionary<string, int>
+    {
+        { "Food", 0 },
+        { "Materials", 0 },
+        { "Luxuries", 0 },
+        { "Population", 0 }
+    };
 
-    private bool clockAnimationFinished;
+    public UIController uiController;
+
+    private float clockFillAmount;
+    private bool eventProcessed;
+
 
     void Start()
     {
+        uiController.AddResourceIndicators();
         StartCoroutine(TickSystem());
     }
 
@@ -26,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         eventProcessed = true;
         clockFillAmount = 0f;
-        StartCoroutine(ResetClock());
+        StartCoroutine(uiController.ResetClock());
     }
 
     IEnumerator TickSystem()
@@ -36,55 +40,25 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(7.5f);
 
             clockFillAmount += 0.25f;
-            StartCoroutine(SetClock(clockFillAmount, 0.01f));
+            StartCoroutine(uiController.SetClock(clockFillAmount, 0.01f));
 
-            yield return new WaitUntil(() => clockAnimationFinished);
-            clockAnimationFinished = false;
+            yield return new WaitUntil(() => UIController.clockAnimationFinished);
+            UIController.clockAnimationFinished = false;
 
             if (clockFillAmount == 1)
             {
                 //Do event stuff
-                eventPanel.SetActive(true);
+                uiController.GenerateEvent();
 
-                while (eventProcessed == false)
-                {
-                    yield return new WaitForEndOfFrame();
-                }
+                yield return new WaitUntil(() => eventProcessed);
                 eventProcessed = false;
             }
             else if (clockFillAmount == 0.5f)
             {
                 //Grow population
-                population += 5;
             }
-        }
-    }
 
-    IEnumerator SetClock(float target, float increment)
-    {
-        float _target = Mathf.Clamp(target + increment, 0, 1);
-        float _increment = increment;
-        while (clock.fillAmount < _target)
-        {
-            clock.fillAmount += _increment;
-            _increment += increment / 5f;
-            yield return new WaitForEndOfFrame();
+            uiController.UpdateHUD();
         }
-        while (clock.fillAmount > target)
-        {
-            clock.fillAmount -= _increment / 5f;
-            yield return new WaitForEndOfFrame();
-        }
-        clockAnimationFinished = true;
-    }
-
-    IEnumerator ResetClock()
-    {
-        while (clock.fillAmount > 0)
-        {
-            clock.fillAmount -= 0.05f;
-            yield return new WaitForEndOfFrame();
-        }
-
     }
 }

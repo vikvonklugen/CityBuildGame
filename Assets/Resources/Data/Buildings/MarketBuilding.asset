@@ -10,19 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ab5b2da5c17ad84887ed98ee65c6c18, type: 3}
-  m_Name: BlackSmithBuilding
+  m_Name: MarketBuilding
   m_EditorClassIdentifier: 
-  name: Blacksmith
+  name: Marketplace
   selectedSound: {fileID: 0}
-  buildingInfo: Produces materials, which you need to make buildings.
-  buildingSprite: {fileID: 0}
+  buildingInfo: Allows you to buy weapons and armor
+  buildingSprite: {fileID: 21300000, guid: 6fdbff886f0bb144a8e74bf44c3e6008, type: 3}
   buildingCost: 0
-  producedResource: 2
-  resourceProducedPerTick: 1
+  producedResource: 0
+  resourceProducedPerTick: 0
   timeToBuild: 0
   initialLevel: 0
-  canBeUpgraded: 0
-  numberOfTimesUpgradeable: 0
+  upgrades: []
   factionsAffectedPositively: []
   factionsAffectedNegatively: []
   factionPositivelyModifier: 0

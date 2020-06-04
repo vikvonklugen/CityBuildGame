@@ -13,6 +13,9 @@ public class BuildingController : MonoBehaviour
     public OnBuildingUpgraded onBuildingUpgraded;
     public OnBuildingProducing onBuildingProducing;
 
+    public int returnedMaterialsOnDestroy;
+    public int productionPerTick;
+    public int level;
     public bool buildable;
     public bool unlockedForBuilding;
 
@@ -27,12 +30,7 @@ public class BuildingController : MonoBehaviour
         else
         {
             buildable = false;
+            productionPerTick = building.resourceProducedPerTick;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

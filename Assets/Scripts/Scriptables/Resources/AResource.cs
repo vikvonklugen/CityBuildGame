@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AResource : ScriptableObject
+[CreateAssetMenu(fileName = "Resource", menuName = "Resource")]
+public class AResource : ScriptableObject
 {
     [SerializeField]
     public string name;
 
     [SerializeField]
-    public int currentAmount;
-
-    [SerializeField]
-    public int bottomLimit;
+    public int startAmount;
 
     [SerializeField]
     public int maximum;
 
-    public abstract void OnEnable ();
+    [SerializeField]
+    public Sprite resourceIcon;
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,14 +18,19 @@ public class Building : ScriptableObject
     public float timeToBuild;
     public int initialLevel;
 
-    public bool canBeUpgraded;
-
-    [Range(0, 3)]
-    public int numberOfTimesUpgradeable;
+    public Upgrade[] upgrades = new Upgrade[0];
 
     public CharacterFaction[] factionsAffectedPositively;
     public CharacterFaction[] factionsAffectedNegatively;
 
     public int factionPositivelyModifier;
     public int factionNegativelyModifier;
+
+    [Serializable]
+    public struct Upgrade
+    {
+        public int materialCost;
+        public string description;
+        public int productionBoost;
+    }
 }
