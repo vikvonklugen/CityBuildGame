@@ -8,6 +8,8 @@ public class HeroManager : MonoBehaviour
     public static List<Hero> recruitableHeroes = new List<Hero>();
     public static List<GameObject> recruitedHeroes = new List<GameObject>();
 
+    public UIController uiController;
+
     private HeroCharacter[] types;
     private HeroName[] names;
     private System.Random random = new System.Random();
@@ -23,6 +25,7 @@ public class HeroManager : MonoBehaviour
         nameObjects.CopyTo(names, 0);
 
         AddRecruitableHero();
+        uiController.UpdateHeroHireScreen();
     }
 
     public void AddRecruitableHero()

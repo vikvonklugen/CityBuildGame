@@ -426,6 +426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 192125193}
+  heroManager: {fileID: 1039806724}
   buildPanel: {fileID: 641473611843613130}
   upgradePanel: {fileID: 1164740204}
   eventPanel: {fileID: 1225330931}
@@ -535,6 +536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7eaa0002124754480cd0e7ef8bd5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiController: {fileID: 1039806719}
 --- !u!1 &1118284964
 GameObject:
   m_ObjectHideFlags: 0

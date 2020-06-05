@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
     private Object[] resourceTypes;
 
     public InputManager inputManager;
+    public HeroManager heroManager;
 
     public GameObject buildPanel;
     public GameObject upgradePanel;
@@ -34,7 +35,6 @@ public class UIController : MonoBehaviour
 
     void Start()
     {
-        UpdateHeroHireScreen();
 
         resourceBar = topLevelHUD.transform.GetChild(0);
         clock = topLevelHUD.transform.GetChild(1).gameObject.GetComponent<Image>();
@@ -75,6 +75,8 @@ public class UIController : MonoBehaviour
 
             buildingButton.GetComponent<Button>().onClick.AddListener(() => BuildBuilding(buildingtype));
         }
+
+        UpdateHeroHireScreen();
     }
 
     public void BuildBuilding(Building building)
@@ -258,19 +260,31 @@ public class UIController : MonoBehaviour
 
         heroHireScreenIndex = Mathf.Clamp(heroHireScreenIndex, 0, HeroManager.recruitableHeroes.Count);
 
-        HeroManager.Hero _hero = HeroManager.recruitableHeroes[heroHireScreenIndex];
-        heroName.text = _hero.heroName.name + " the " + _hero.type.heroType;
-        heroSprite.sprite = _hero.type.icon;
-        heroInfo.text = "Faction: " + _hero.type.faction.name + "\n" + _hero.heroName.description + "\nCost: " + _hero.heroName.recruitmentCost;
+        if (HeroManager.recruitableHeroes.Count != 0)
+        {
+            HeroManager.Hero _hero = HeroManager.recruitableHeroes[heroHireScreenIndex];
+            heroName.text = _hero.heroName.name + " the " + _hero.type.heroType;
+            heroSprite.sprite = _hero.type.icon;
+            heroInfo.text = "Faction: " + _hero.type.faction.name + "\n" + _hero.heroName.description + "\nCost: " + _hero.heroName.recruitmentCost;
 
-        if (GameManager.currentEvent != null)
-        {
-            heroSprite.transform.GetChild(0).gameObject.SetActive(true);
-            heroSprite.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Image>().sprite = GetCombatModifierIcon(_hero);
-        }
-        else
-        {
-            heroSprite.transform.GetChild(0).gameObject.SetActive(false);
+            if (GameManager.currentEvent != null)
+            {
+                heroSprite.transform.GetChild(0).gameObject.SetActive(true);
+                heroSprite.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Image>().sprite = GetCombatModifierIcon(_hero);
+            }
+            else
+            {
+                heroSprite.transform.GetChild(0).gameObject.SetActive(false);
+            }
+
+            if (GameManager.resources["Luxuries"] < _hero.heroName.recruitmentCost)
+            {
+                hireButton.interactable = false;
+            }
+            else
+            {
+                hireButton.interactable = true;
+            }
         }
 
         if (heroHireScreenIndex == 0)
@@ -282,7 +296,7 @@ public class UIController : MonoBehaviour
             backButton.interactable = true;
         }
 
-        if (heroHireScreenIndex == HeroManager.recruitableHeroes.Count - 1)
+        if (heroHireScreenIndex == Mathf.Clamp(HeroManager.recruitableHeroes.Count - 1, 0, int.MaxValue))
         {
             nextButton.interactable = false;
         }
@@ -291,14 +305,6 @@ public class UIController : MonoBehaviour
             nextButton.interactable = true;
         }
 
-        if (GameManager.resources["Luxuries"] < _hero.heroName.recruitmentCost)
-        {
-            hireButton.interactable = false;
-        }
-        else
-        {
-            hireButton.interactable = true;
-        }
     }
 
     public void UpdateHeroSelectScreen()
