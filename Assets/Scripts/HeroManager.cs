@@ -6,7 +6,7 @@ using UnityEngine;
 public class HeroManager : MonoBehaviour
 {
     public static List<Hero> recruitableHeroes = new List<Hero>();
-    public static List<GameObject> recruitedHeroes = new List<GameObject>();
+    public static List<Hero> recruitedHeroes = new List<Hero>();
 
     public UIController uiController;
 
@@ -41,6 +41,7 @@ public class HeroManager : MonoBehaviour
         randomHero.heroName = names[random.Next(0, names.Length)];
         randomHero.injured = false;
         randomHero.eventsInjured = 0;
+        randomHero.mentality = randomHero.heroName.recruitedMentality;
 
         return randomHero;
     }
@@ -50,6 +51,7 @@ public class HeroManager : MonoBehaviour
     {
         public HeroCharacter type;
         public HeroName heroName;
+        public int mentality;
         public bool injured;
         public int eventsInjured;
     }

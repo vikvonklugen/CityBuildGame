@@ -11,7 +11,7 @@ public class Building : ScriptableObject
     public string buildingInfo;
     public Sprite buildingSprite;
     public int buildingCost;
-    public AResource.Resource producedResource;
+    public AResource.Type producedResource;
     public int resourceProducedPerTick;
     public float timeToBuild;
     public int initialLevel;

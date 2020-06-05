@@ -14,5 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: "Lord, the town is haunted by ghosts. No one has seen them, but we
     know they\u2019re there. Please save us from this unease! "
+  failAction: Unsurprisingly, HERO got scared and fled.
+  eventLoseText: The ghosts haunted your BUILDING!
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
-  rewards: []
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

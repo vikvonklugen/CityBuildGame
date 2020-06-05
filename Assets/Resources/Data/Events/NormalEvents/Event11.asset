@@ -14,5 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: "Lord, space dolphins keep stealing our fish and thanking us. We need
     those fish to survive. Don\u2019t let us starve!"
+  failAction: HERO managed to stop them,
+  eventLoseText: but all the stolen fish fell from space onto your BUILDING!
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
-  rewards: []
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

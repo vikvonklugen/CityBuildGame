@@ -14,5 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, mermaids keep luring our men to their death. Help them think
     with their heads and banish the mermaids!
+  failAction: On the way to the mermaids, leaks appeared in the boat. HERO almost
+    drowned!
+  eventLoseText: For game balancing reasons, your BUILDING was destroyed!
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
-  rewards: []
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

@@ -14,5 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: "Lord, kobolds are trying to seduce our women, but it\u2019s just
     making them violently ill. Save us from this terror!"
+  failAction: Sorry, but HERO is too busy right now caring for his wife.
+  eventLoseText: One woman vomited all over your BUILDING! The people have decided
+    to take it down.
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: f597d586e79837341b3ab22602d1c041, type: 2}
-  rewards: []
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

@@ -14,5 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, fire elementals keep popping out of our chimneys. Protect us
     from their chicanery!
+  failAction: Trying to catch one of them, HERO got his bottom burnt!
+  eventLoseText: In the meantime, your BUILDING caught fire!
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
-  rewards: []
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

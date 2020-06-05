@@ -37,8 +37,5 @@ public class HeroName : ScriptableObject
 
     [Tooltip("How content the hero is when recruited freshly.")]
     [Range(-10, 10)]
-    public int recruitedHappiness;
-
-    [Tooltip("Don't change this variable pls")]
-    public int mentality;
+    public int recruitedMentality;
 }

@@ -14,5 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, zombies are rising from our graveyard and keeping us up at night
     with their incessant moaning. Please help us get some sleep!
+  failAction: HERO fell on the ground from sleep before he could even reach the zombies.
+  eventLoseText: They managed to invade your BUILDING!
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
-  rewards: []
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

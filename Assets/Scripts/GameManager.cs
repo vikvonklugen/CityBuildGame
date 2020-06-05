@@ -4,23 +4,24 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static Dictionary<string, int> resources = new Dictionary<string, int>
+    public static Dictionary<AResource.Type, int> resources = new Dictionary<AResource.Type, int>
     {
-        { "Food", 0 },
-        { "Materials", 0 },
-        { "Luxuries", 0 },
-        { "Population", 0 }
+        { AResource.Type.Food, 0 },
+        { AResource.Type.Materials, 0 },
+        { AResource.Type.Luxuries, 0 },
+        { AResource.Type.Population, 0 }
     };
 
-    public static Dictionary<string, int> resourceGrowth = new Dictionary<string, int>
+    public static Dictionary<AResource.Type, int> resourceGrowth = new Dictionary<AResource.Type, int>
     {
-        { "Food", 0 },
-        { "Materials", 0 },
-        { "Luxuries", 0 },
-        { "Population", 5 }
+        { AResource.Type.Food, 0 },
+        { AResource.Type.Materials, 0 },
+        { AResource.Type.Luxuries, 0 },
+        { AResource.Type.Population, 5 }
     };
 
-    public UIController uiController;
+    public UIController UIController;
+    public static UIController uiController;
     public HeroManager heroManager;
 
     public static Event currentEvent;
@@ -30,10 +31,13 @@ public class GameManager : MonoBehaviour
     private bool eventProcessed;
     private System.Random random;
 
+    public static int heroSelectScreenIndex = 0;
+
 
     void Start()
     {
-        uiController.AddResourceIndicators();
+        uiController = UIController;
+
         StartCoroutine(TickSystem());
 
         Object[] eventObjects = Resources.LoadAll("Data/Events/NormalEvents");
@@ -55,7 +59,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSecondsRealtime(7.5f);
+            yield return new WaitForSecondsRealtime(0.5f);
 
             clockFillAmount += 0.25f;
             StartCoroutine(uiController.SetClock(clockFillAmount, 0.01f));
@@ -80,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     void PopulationTick()
     {
-        resources["Population"] += resourceGrowth["Population"];
+        StartCoroutine(uiController.AddResources(new AResource.ResourceBundle(AResource.Type.Population, resourceGrowth[AResource.Type.Population])));
         EveryTick();
     }
 
@@ -98,9 +102,9 @@ public class GameManager : MonoBehaviour
     {
         heroManager.AddRecruitableHero();
         uiController.UpdateHeroHireScreen();
-        resources["Food"] += resourceGrowth["Food"];
-        resources["Materials"] += resourceGrowth["Materials"];
-        resources["Luxuries"] += resourceGrowth["Luxuries"];
+        StartCoroutine(uiController.AddResources(new AResource.ResourceBundle(AResource.Type.Food, resourceGrowth[AResource.Type.Food])));
+        StartCoroutine(uiController.AddResources(new AResource.ResourceBundle(AResource.Type.Materials, resourceGrowth[AResource.Type.Materials])));
+        StartCoroutine(uiController.AddResources(new AResource.ResourceBundle(AResource.Type.Luxuries, resourceGrowth[AResource.Type.Luxuries])));
 
         uiController.UpdateHUD();
     }

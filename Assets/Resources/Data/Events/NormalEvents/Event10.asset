@@ -14,5 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, space creatures have been mind-controlling our citizens, forcing
     them to make out with pigs. This madness has to end!
+  failAction: Unfortunately, HERO got brainwashed as well.
+  eventLoseText: However, he was brainwashed into destroying your BUILDING!
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
-  rewards: []
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

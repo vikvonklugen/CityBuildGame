@@ -14,5 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: "Lord, my brother swears that his wife\u2019s second cousin is a vampire.
     You have to stop this menace at all costs!"
+  failAction: Being a judge for a profession, HERO held a case against the supposed
+    vampire. Having spoken to his entire family, he was pleaded not guilty.
+  eventLoseText: However, your BUILDING converted into a court.
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
-  rewards: []
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

@@ -14,5 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, space whales are flying towards our town leaving their gooey
     essence everywhere. Save us from a sticky death!
+  failAction: HERO managed to shoot down one of the whales!
+  eventLoseText: However, it landed right on your BUILDING!
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
-  rewards: []
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

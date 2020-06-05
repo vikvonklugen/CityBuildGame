@@ -14,5 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, I have been hiccupping for three days straight. This must be
     a curse cast by a witch. Save me from this terrible affliction!
+  failAction: HERO got cursed by the evil witch.
+  eventLoseText: She cast a spell on your BUILDING too!
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
-  rewards: []
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

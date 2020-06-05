@@ -285,6 +285,8 @@ MonoBehaviour:
   hero:
     type: {fileID: 0}
     heroName: {fileID: 0}
+    injured: 0
+    eventsInjured: 0
 --- !u!1 &7057462085112812730
 GameObject:
   m_ObjectHideFlags: 0

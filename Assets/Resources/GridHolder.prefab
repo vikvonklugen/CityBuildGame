@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ff8a7f167963e142a2353957c422d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 6
-  cols: 6
+  rows: 4
+  cols: 3
   tileSize: 1.5
 --- !u!61 &-3014270025093274915
 BoxCollider2D:

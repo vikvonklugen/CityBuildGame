@@ -17,7 +17,7 @@ MonoBehaviour:
   buildingInfo: Allows you to buy weapons and armor
   buildingSprite: {fileID: 21300000, guid: 6fdbff886f0bb144a8e74bf44c3e6008, type: 3}
   buildingCost: 0
-  producedResource: 0
+  producedResource: 5
   resourceProducedPerTick: 0
   timeToBuild: 0
   initialLevel: 0

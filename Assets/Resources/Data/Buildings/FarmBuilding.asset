@@ -17,11 +17,10 @@ MonoBehaviour:
   buildingInfo: Produces food for your heroes.
   buildingSprite: {fileID: 21300000, guid: eef704e786abcca4db07d2f170621096, type: 3}
   buildingCost: 0
-  producedResource: 1
+  producedResource: 0
   resourceProducedPerTick: 1
   timeToBuild: 0
   initialLevel: 0
-  canBeUpgraded: 0
   upgrades:
   - materialCost: 10
     description: Increases food production by 3

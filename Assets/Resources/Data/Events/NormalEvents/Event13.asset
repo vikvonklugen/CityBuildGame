@@ -14,5 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, imps and fairies keep casting spells where we say the opposite
     of what we meant. My mother thinks I hate her. Please help!
+  failAction: HERO got outnumbered by the sheer amount of spells.
+  eventLoseText: 'Someone said: "Build a BUILDING!", and you can guess what happened
+    next...'
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
-  rewards: []
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

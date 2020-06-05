@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, orcs are raiding our forests, burning all our wood. You must
     stop them!
+  failAction: HERO got lost in the forest,
+  eventLoseText: and the orcs burnt your BUILDING down!
+  eventWinText: 
   enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
   rewards:
-  - resourceType: 1
-    resourceAmount: 10
   - resourceType: 0
-    resourceAmount: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10
