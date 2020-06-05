@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(7.5f);
 
             clockFillAmount += 0.25f;
             StartCoroutine(uiController.SetClock(clockFillAmount, 0.01f));

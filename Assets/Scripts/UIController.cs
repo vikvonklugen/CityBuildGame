@@ -352,6 +352,7 @@ public class UIController : MonoBehaviour
         GameObject hiredHero = (GameObject)Instantiate(Resources.Load("UI/HeroMenu/HeroSprite"), heroListContent);
         hiredHero.GetComponent<HeroController>().hero = HeroManager.recruitableHeroes[heroHireScreenIndex];
         HeroManager.recruitedHeroes.Add(hiredHero);
+        HeroManager.recruitableHeroes.Remove(HeroManager.recruitableHeroes[heroHireScreenIndex]);
         UpdateHeroSelectScreen();
     }
 
