@@ -8,13 +8,9 @@ using UnityEngine;
 public class Event : ScriptableObject
 {
     public string description;
+    public string failAction;
+    public string eventLoseText;
+    public string eventWinText;
     public CharacterFaction enemyType;
-    public Reward[] rewards;
-
-    [Serializable]
-    public struct Reward
-    {
-        public AResource.Resource resourceType;
-        public int resourceAmount;
-    }
+    public AResource.ResourceBundle[] rewards;
 }

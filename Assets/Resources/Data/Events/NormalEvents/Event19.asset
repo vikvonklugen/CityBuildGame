@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c687f2fd64213244966767e8ab13917, type: 3}
+  m_Name: Event19
+  m_EditorClassIdentifier: 
+  description: Lord, I have been hiccupping for three days straight. This must be
+    a curse cast by a witch. Save me from this terrible affliction!
+  failAction: HERO got cursed by the evil witch.
+  eventLoseText: She cast a spell on your BUILDING too!
+  eventWinText: 
+  enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

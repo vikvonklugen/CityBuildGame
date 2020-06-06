@@ -4,33 +4,40 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static Dictionary<string, int> resources = new Dictionary<string, int>
+    public static Dictionary<AResource.Type, int> resources = new Dictionary<AResource.Type, int>
     {
-        { "Food", 0 },
-        { "Materials", 0 },
-        { "Luxuries", 0 },
-        { "Population", 0 }
+        { AResource.Type.Food, 0 },
+        { AResource.Type.Materials, 0 },
+        { AResource.Type.Luxuries, 0 },
+        { AResource.Type.Population, 0 }
     };
 
-    public static Dictionary<string, int> resourceGrowth = new Dictionary<string, int>
+    public static Dictionary<AResource.Type, int> resourceGrowth = new Dictionary<AResource.Type, int>
     {
-        { "Food", 0 },
-        { "Materials", 0 },
-        { "Luxuries", 0 },
-        { "Population", 5 }
+        { AResource.Type.Food, 0 },
+        { AResource.Type.Materials, 0 },
+        { AResource.Type.Luxuries, 0 },
+        { AResource.Type.Population, 5 }
     };
 
-    public UIController uiController;
+    public UIController UIController;
+    public static UIController uiController;
+    public HeroManager heroManager;
+
+    public static Event currentEvent;
 
     private Event[] events;
     private float clockFillAmount;
     private bool eventProcessed;
     private System.Random random;
 
+    public static int heroSelectScreenIndex = 0;
+
 
     void Start()
     {
-        uiController.AddResourceIndicators();
+        uiController = UIController;
+
         StartCoroutine(TickSystem());
 
         Object[] eventObjects = Resources.LoadAll("Data/Events/NormalEvents");
@@ -52,7 +59,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSecondsRealtime(7.5f);
+            yield return new WaitForSecondsRealtime(1.5f);
 
             clockFillAmount += 0.25f;
             StartCoroutine(uiController.SetClock(clockFillAmount, 0.01f));
@@ -66,6 +73,7 @@ public class GameManager : MonoBehaviour
 
                 yield return new WaitUntil(() => eventProcessed);
                 eventProcessed = false;
+                currentEvent = null;
             }
             else if (clockFillAmount == 0.5f)
             {
@@ -76,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     void PopulationTick()
     {
-        resources["Population"] += resourceGrowth["Population"];
+        StartCoroutine(uiController.AddResources(new AResource.ResourceBundle(AResource.Type.Population, resourceGrowth[AResource.Type.Population])));
         EveryTick();
     }
 
@@ -84,15 +92,19 @@ public class GameManager : MonoBehaviour
     {
         EveryTick();
 
-        Event currentevent = events[random.Next(0, events.Length)];
-        uiController.DisplayEvent(currentevent);
+        currentEvent = events[random.Next(0, events.Length)];
+        uiController.DisplayEvent();
+        uiController.UpdateHeroSelectScreen();
+        uiController.UpdateHeroHireScreen();
     }
 
     void EveryTick()
     {
-        resources["Food"] += resourceGrowth["Food"];
-        resources["Materials"] += resourceGrowth["Materials"];
-        resources["Luxuries"] += resourceGrowth["Luxuries"];
+        heroManager.AddRecruitableHero();
+        uiController.UpdateHeroHireScreen();
+        StartCoroutine(uiController.AddResources(new AResource.ResourceBundle(AResource.Type.Food, resourceGrowth[AResource.Type.Food])));
+        StartCoroutine(uiController.AddResources(new AResource.ResourceBundle(AResource.Type.Materials, resourceGrowth[AResource.Type.Materials])));
+        StartCoroutine(uiController.AddResources(new AResource.ResourceBundle(AResource.Type.Luxuries, resourceGrowth[AResource.Type.Luxuries])));
 
         uiController.UpdateHUD();
     }

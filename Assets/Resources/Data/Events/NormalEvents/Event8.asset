@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c687f2fd64213244966767e8ab13917, type: 3}
+  m_Name: Event8
+  m_EditorClassIdentifier: 
+  description: Lord, space whales are flying towards our town leaving their gooey
+    essence everywhere. Save us from a sticky death!
+  failAction: HERO managed to shoot down one of the whales!
+  eventLoseText: However, it landed right on your BUILDING!
+  eventWinText: 
+  enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

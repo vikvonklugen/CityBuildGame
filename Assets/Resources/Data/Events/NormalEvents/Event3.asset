@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c687f2fd64213244966767e8ab13917, type: 3}
+  m_Name: Event3
+  m_EditorClassIdentifier: 
+  description: Lord, goblins have organized into a labor union and are trying to
+    recruit our townspeople into their socialist utopia. Stop them before we lose
+    our workers!
+  failAction: HERO joins the goblins,
+  eventLoseText: and they took over your BUILDING!
+  eventWinText: 
+  enemyType: {fileID: 11400000, guid: f597d586e79837341b3ab22602d1c041, type: 2}
+  rewards:
+  - resourceType: 0
+    resourceAmount: 15
+  - resourceType: 2
+    resourceAmount: 10

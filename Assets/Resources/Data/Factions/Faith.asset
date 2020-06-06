@@ -12,17 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18622f99f583a00408d69d0f758ca256, type: 3}
   m_Name: Faith
   m_EditorClassIdentifier: 
-  name: Faith
-  backGround: TODO
-  naturalAllies:
-  - {fileID: 11400000, guid: 4b8deced264a71f42b29fbe29c5bf705, type: 2}
-  sameFactionModifier: 1
-  naturalEnemiesDislikeModifier: -1
-  naturalEnemies:
-  - {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
   icon: {fileID: 0}
-  canDie: 0
-  canFlee: 0
-  canBeTurned: 0
-  canBeRevived: 0
-  canBeRecruited: 0
+  strongAgainst: {fileID: 11400000, guid: f597d586e79837341b3ab22602d1c041, type: 2}
+  weakAgainst: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}

@@ -1,21 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Resource", menuName = "Resource")]
 public class AResource : ScriptableObject
 {
-    public enum Resource { None, Food, Materials, Luxuries, Seconds }
+    [Serializable]
+    public enum Type { Food, Luxuries, Materials, Population, Seconds, None }
 
-    [SerializeField]
-    public string name;
+    public Type resource;
 
-    [SerializeField]
     public int startAmount;
 
-    [SerializeField]
     public int maximum;
 
-    [SerializeField]
     public Sprite resourceIcon;
+
+    public Sprite resourceBorder;
+
+    [Serializable]
+    public struct ResourceBundle
+    {
+        public ResourceBundle(Type type, int amount)
+        {
+            resourceType = type;
+            resourceAmount = amount;
+        }
+
+        public Type resourceType;
+        public int resourceAmount;
+    }
 }
