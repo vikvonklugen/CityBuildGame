@@ -88,9 +88,10 @@ public class HeroEventManager : MonoBehaviour
                 switch (battleResult)
                 {
                     case 2:
-                        friptaliBattleResult = "He fought " + randomHero.heroName.name + " the " + randomHero.type.heroType + " and won! " + randomHero.heroName.name + " is injured, but Friptali gained 1 strength!";
+                        friptaliBattleResult = "He fought " + randomHero.heroName.name + " the " + randomHero.type.heroType + " and won! " + randomHero.heroName.name + " is injured and lost 1 mentality, but Friptali gained 1 strength!";
                         randomHero.injured = true;
                         randomHero.eventsInjured = 3;
+                        randomHero.mentality--;
                         hero.strength++;
                         break;
                     case 1:
@@ -111,9 +112,10 @@ public class HeroEventManager : MonoBehaviour
                         hero.eventsInjured = 3;
                         break;
                     case -2:
-                        friptaliBattleResult = "He fought " + randomHero.heroName.name + " the " + randomHero.type.heroType + " and won! Friptali is injured, but " + randomHero.heroName.name + " gained 1 strength!";
+                        friptaliBattleResult = "He fought " + randomHero.heroName.name + " the " + randomHero.type.heroType + " and won! Friptali is injured, but " + randomHero.heroName.name + " gained 1 strength and mentality!";
                         hero.injured = true;
                         hero.eventsInjured = 3;
+                        randomHero.mentality++;
                         randomHero.strength++;
                         break;
                 }

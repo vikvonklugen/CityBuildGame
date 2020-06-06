@@ -57,9 +57,10 @@ public class EventManager : MonoBehaviour
                     eventResultText =
                         GameManager.currentEvent.failAction.Replace("HERO", hero.heroName.name) + " " +
                         GameManager.currentEvent.eventLoseText.Replace("BUILDING", buildingName.ToLower()) + " " +
-                        hero.heroName.name + " is injured.";
+                        hero.heroName.name + " is injured and lost 1 mentality.";
                     hero.injured = true;
                     hero.eventsInjured = 3 + GameManager.extraInjuryDuration;
+                    hero.mentality--;
                     break;
 
                 case -1:
