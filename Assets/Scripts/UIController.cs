@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using TMPro;
@@ -7,8 +8,8 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    private Object[] buildingTypes;
-    private Object[] resourceTypes;
+    private UnityEngine.Object[] buildingTypes;
+    private UnityEngine.Object[] resourceTypes;
 
     public InputManager inputManager;
     public HeroManager heroManager;
@@ -42,6 +43,9 @@ public class UIController : MonoBehaviour
     private TextMeshProUGUI[] growthText = new TextMeshProUGUI[4];
 
     private System.Random random = new System.Random();
+
+
+    public static event Action ResourcesChangedEvent = delegate { };
 
     void Start()
     {
