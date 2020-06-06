@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: Zrantic
   m_EditorClassIdentifier: 
   recruitmentCost: 2
-  description: Causes next enemy to have +2 strength when he fights
-  recruitedEvent: {fileID: 0}
-  deathEvent: {fileID: 0}
-  combatEvent: {fileID: 0}
-  combatResultEvent: {fileID: 0}
-  upsetEvent: {fileID: 0}
-  expectedEventUsageFrequency: 0
+  description: 'On participate: causes next enemy to have +2 strength when he fights'
+  upsetEventText: He injured one of your heroes!
+  upsetMentalityThreshold: -5
   recruitedMentality: 0

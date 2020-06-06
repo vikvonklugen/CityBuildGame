@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,7 +36,7 @@ public class HeroManager : MonoBehaviour
     Hero ReturnRandomHero()
     {
         HeroName name = names[random.Next(0, names.Length)];
-        Hero randomHero = new Hero(types[random.Next(0, types.Length)], name, 0, name.recruitedMentality, false, 0);
+        Hero randomHero = new Hero(types[random.Next(0, types.Length)], name, name.upsetMentalityThreshold, 0, name.recruitedMentality, false, 0);
 
         return randomHero;
     }
@@ -45,10 +44,11 @@ public class HeroManager : MonoBehaviour
     [Serializable]
     public class Hero
     {
-        public Hero(HeroCharacter _type, HeroName _heroName, int _strength, int _mentality, bool _injured, int _eventsInjured)
+        public Hero(HeroCharacter _type, HeroName _heroName, int _upsetMentalityThreshold, int _strength, int _mentality, bool _injured, int _eventsInjured)
         {
             type = _type;
             heroName = _heroName;
+            upsetMentalityThreshold = _upsetMentalityThreshold;
             strength = _strength;
             mentality = _mentality;
             injured = _injured;
@@ -57,6 +57,7 @@ public class HeroManager : MonoBehaviour
 
         public HeroCharacter type;
         public HeroName heroName;
+        public int upsetMentalityThreshold;
         public int strength;
         public int mentality;
         public bool injured;

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.iOS;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
@@ -9,87 +6,139 @@ public class EventManager : MonoBehaviour
     private int lossCount = 0;
     private string eventResultText;
     private string buildingName;
+    private bool firstEvent = true;
 
-    public void EventFight()
+    public HeroEventManager heroEventManager;
+
+    public void EventFight(bool sendcitizen = false)
     {
-        HeroManager.Hero hero = HeroManager.recruitedHeroes[GameManager.heroSelectScreenIndex];
-        CharacterFaction enemyFaction = GameManager.currentEvent.enemyType;
-
-        int enemyStrength = random.Next(0, 7);
-        int heroStrength = random.Next(0, 7) + hero.strength;
-
-        if (hero.type.faction.strongAgainst == enemyFaction)
+        if (!sendcitizen)
         {
-            heroStrength++;
-        }
-        else if (hero.type.faction.weakAgainst == enemyFaction)
-        {
-            heroStrength--;
-        }
+            HeroManager.Hero hero = HeroManager.recruitedHeroes[GameManager.heroSelectScreenIndex];
+            CharacterFaction enemyFaction = GameManager.currentEvent.enemyType;
 
-        int battleResult = Mathf.Clamp(heroStrength - enemyStrength, -2, 2);
+            int enemyStrength = random.Next(0, 7) + GameManager.enemyStrengthModifer;
+            int heroStrength = random.Next(0, 7) + hero.strength;
+            if (hero.heroName.name != "Jonvrab")
+            {
+                heroStrength += GameManager.jonvrabStrengthModifier;
+            }
+            GameManager.enemyStrengthModifer = 0;
 
-        switch (battleResult)
-        {
-            case -2:
-                LoseEvent();
-                if (buildingName == null)
-                {
-                    buildingName = "empty field";
-                }
-                eventResultText = 
-                    GameManager.currentEvent.failAction.Replace("HERO", hero.heroName.name) + " " + 
-                    GameManager.currentEvent.eventLoseText.Replace("BUILDING", buildingName.ToLower()) + " " + 
-                    hero.heroName.name + " is injured.";
-                hero.injured = true;
-                hero.eventsInjured = 3;
-                break;
+            if (hero.type.faction.strongAgainst == enemyFaction)
+            {
+                heroStrength += 2;
+            }
+            else if (hero.type.faction.weakAgainst == enemyFaction)
+            {
+                heroStrength -= 2;
+            }
 
-            case -1:
-                eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
-                    " However, HERO was injured and lost 1 strength.".Replace("HERO", hero.heroName.name);
-                hero.strength--;
-                hero.injured = true;
-                hero.eventsInjured = 3;
-                break;
+            hero.mentality++;
 
-            case 0:
-                eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
-                    " However, HERO was injured.".Replace("HERO", hero.heroName.name);
-                hero.injured = true;
-                hero.eventsInjured = 3;
-                break;
+            heroEventManager.OnParticipatingEvent(hero);
 
-            case 1:
-                eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name);
-                break;
+            int battleResult = Mathf.Clamp(heroStrength - enemyStrength, -2, 2);
 
-            case 2:
-                if (hero.strength < 3)
-                {
-                    eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) + 
-                        " HERO gained 1 strength and mentality!".Replace("HERO", hero.heroName.name);
-                    hero.strength++;
-                }
-                else
-                {
+            if (firstEvent)
+            {
+                battleResult = 2;
+                firstEvent = false;
+            }
+
+            switch (battleResult)
+            {
+                case -2:
+                    LoseEvent();
+                    if (buildingName == null)
+                    {
+                        buildingName = "empty field";
+                    }
+                    eventResultText =
+                        GameManager.currentEvent.failAction.Replace("HERO", hero.heroName.name) + " " +
+                        GameManager.currentEvent.eventLoseText.Replace("BUILDING", buildingName.ToLower()) + " " +
+                        hero.heroName.name + " is injured and lost 1 mentality.";
+                    hero.injured = true;
+                    hero.eventsInjured = 3 + GameManager.extraInjuryDuration;
+                    hero.mentality--;
+                    break;
+
+                case -1:
                     eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
-                        " HERO gained 1 mentality!".Replace("HERO", hero.heroName.name);
-                }
-                hero.mentality++;
-                break;
+                        " However, HERO was injured and lost 1 strength.".Replace("HERO", hero.heroName.name);
+                    hero.strength--;
+                    hero.injured = true;
+                    hero.eventsInjured = 3 + GameManager.extraInjuryDuration;
+                    break;
+
+                case 0:
+                    eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
+                        " However, HERO was injured.".Replace("HERO", hero.heroName.name);
+                    hero.injured = true;
+                    hero.eventsInjured = 3 + GameManager.extraInjuryDuration;
+                    break;
+
+                case 1:
+                    eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name);
+                    break;
+
+                case 2:
+                    if (hero.strength < 3)
+                    {
+                        eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
+                            " HERO gained 1 strength and mentality!".Replace("HERO", hero.heroName.name);
+                        hero.strength++;
+                    }
+                    else
+                    {
+                        eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
+                            " HERO gained 1 mentality!".Replace("HERO", hero.heroName.name);
+                    }
+                    hero.mentality++;
+                    break;
+            }
+        }
+        else
+        {
+            LoseEvent();
+
+            if (buildingName == null)
+            {
+                buildingName = "empty field";
+            }
+
+            string citizentext = GameManager.currentEvent.failAction.Replace("HERO", "the random citizen");
+
+            eventResultText =
+                char.ToUpper(citizentext[0]) + citizentext.Substring(1) + " " +
+                GameManager.currentEvent.eventLoseText.Replace("BUILDING", buildingName.ToLower());
         }
 
         foreach (HeroManager.Hero hiredHero in HeroManager.recruitedHeroes)
         {
+            hiredHero.mentality--;
             hiredHero.eventsInjured--;
             if (hiredHero.eventsInjured == 0)
             {
                 hiredHero.injured = false;
             }
+            if (hiredHero.eventsInjured < 2 && GameManager.hospitalsBuilt > 0)
+            {
+                hiredHero.injured = false;
+            }
+
+            if (hiredHero.mentality <= hiredHero.heroName.upsetMentalityThreshold)
+            {
+                heroEventManager.UpsetEvent(hiredHero);
+            }
         }
 
-        GameManager.uiController.FinalizeEvent(eventResultText);
+        GameManager.uiController.FinalizeEvent(eventResultText, sendcitizen);
+    }
+
+    public void SendCitizen()
+    {
+        EventFight(true);
     }
 
     void LoseEvent()
