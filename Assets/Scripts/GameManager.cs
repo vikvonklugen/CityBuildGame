@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public UIController UIController;
     public static UIController uiController;
     public HeroManager heroManager;
+    public PlayRandom playRandom;
 
     public static Event currentEvent;
 
@@ -114,5 +115,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(uiController.AddResources(new AResource.ResourceBundle(AResource.Type.Luxuries, resourceGrowth[AResource.Type.Luxuries])));
 
         uiController.UpdateHUD();
+
+        playRandom.StartSound();
     }
 }
