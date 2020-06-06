@@ -16,7 +16,7 @@ MonoBehaviour:
   selectedSound: {fileID: 0}
   buildingInfo: Reduces injured heroes recovery time by 2 rounds
   buildingSprite: {fileID: 21300000, guid: c65fffc6661503a4ebac0facc8fe3396, type: 3}
-  buildingCost: 0
+  buildingCost: 20
   producedResource: 5
   resourceProducedPerTick: 0
   timeToBuild: 0

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,7 +48,7 @@ public class UIController : MonoBehaviour
     {
 
         resourceBar = topLevelHUD.transform.GetChild(0);
-        clock = topLevelHUD.transform.GetChild(1).gameObject.GetComponent<Image>();
+        clock = topLevelHUD.transform.GetChild(2).gameObject.GetComponent<Image>();
 
         buildingListContent = buildPanel.transform.GetChild(1).GetChild(0).GetChild(0);
 
@@ -65,9 +66,9 @@ public class UIController : MonoBehaviour
         foreach (Building buildingtype in buildingTypes)
         {
             GameObject building = (GameObject)Instantiate(Resources.Load("BuildingUIButtonItem"), buildingListContent);
-            GameObject buildingButton = building.transform.GetChild(0).gameObject;
-            GameObject buildingName = building.transform.GetChild(1).gameObject;
-            GameObject buildingInfo = building.transform.GetChild(2).gameObject;
+            GameObject buildingButton = building.transform.GetChild(1).gameObject;
+            GameObject buildingName = building.transform.GetChild(2).gameObject;
+            GameObject buildingInfo = building.transform.GetChild(3).gameObject;
 
             if (buildingtype.buildingSprite != null)
             {
@@ -79,7 +80,7 @@ public class UIController : MonoBehaviour
             }
             if (buildingtype.buildingInfo != null)
             {
-                buildingInfo.GetComponent<TextMeshProUGUI>().text = buildingtype.buildingInfo;
+                buildingInfo.GetComponent<TextMeshProUGUI>().text = buildingtype.buildingInfo + "\nCost: " + buildingtype.buildingCost;
             }
 
             buildingButton.GetComponent<Button>().onClick.AddListener(() => BuildBuilding(buildingtype));
@@ -100,8 +101,9 @@ public class UIController : MonoBehaviour
     public void BuildBuilding(Building building)
     {
         BuildingController buildingController = InputManager.selectedTile.GetComponent<BuildingController>();
-        if (buildingController.buildable)
+        if (buildingController.buildable && GameManager.resources[AResource.Type.Materials] >= building.buildingCost)
         {
+            StartCoroutine(AddResources(new AResource.ResourceBundle(AResource.Type.Materials, -building.buildingCost)));
             buildingController.buildable = false;
             buildingController.building = building;
             buildingController.productionPerTick = building.resourceProducedPerTick;
@@ -116,6 +118,7 @@ public class UIController : MonoBehaviour
             UpdateHUD();
             buildPanel.SetActive(false);
             UpdateUpgradeMenu(buildingController);
+            upgradePanel.SetActive(true);
         }
     }
 
@@ -142,13 +145,13 @@ public class UIController : MonoBehaviour
             }
             
             buildingController = buildingTiles[random.Next(0, buildingTiles.Count - 1)];
-            buildingController.GetComponentInParent<SpriteRenderer>().sprite = emptyTileSprite;
+            buildingController.GetComponentInParent<SpriteRenderer>().sprite = null;
         }
         else
         {
             buildingController = InputManager.selectedTile.GetComponent<BuildingController>();
             StartCoroutine(AddResources(new AResource.ResourceBundle(AResource.Type.Materials, buildingController.returnedMaterialsOnDestroy)));
-            InputManager.selectedTile.GetComponent<SpriteRenderer>().sprite = emptyTileSprite;
+            InputManager.selectedTile.GetComponent<SpriteRenderer>().sprite = null;
         }
 
         Building building = buildingController.building;
@@ -164,6 +167,12 @@ public class UIController : MonoBehaviour
         UpdateHUD();
         upgradePanel.SetActive(false);
         inputManager.Deselect();
+
+        if (GameManager.currentEvent != null)
+        {
+            eventPanel.SetActive(true);
+        }
+
         return building.name;
     }
 
@@ -171,17 +180,22 @@ public class UIController : MonoBehaviour
     {
         BuildingController buildingController = InputManager.selectedTile.GetComponent<BuildingController>();
         Building building = buildingController.building;
-        buildingController.productionPerTick += building.upgrades[buildingController.level].productionBoost;
-        buildingController.returnedMaterialsOnDestroy += (int)Mathf.Floor(building.upgrades[buildingController.level].materialCost / 2f);
 
-        if (building.producedResource != AResource.Type.Seconds && building.producedResource != AResource.Type.None)
+        if (GameManager.resources[AResource.Type.Materials] >= building.upgrades[buildingController.level].materialCost)
         {
-            GameManager.resourceGrowth[building.producedResource] += building.upgrades[buildingController.level].productionBoost;
-        }
+            StartCoroutine(AddResources(new AResource.ResourceBundle(AResource.Type.Materials, -building.upgrades[buildingController.level].materialCost)));
+            buildingController.productionPerTick += building.upgrades[buildingController.level].productionBoost;
+            buildingController.returnedMaterialsOnDestroy += (int)Mathf.Floor(building.upgrades[buildingController.level].materialCost / 2f);
 
-        buildingController.level++;
-        UpdateUpgradeMenu(buildingController);
-        UpdateHUD();
+            if (building.producedResource != AResource.Type.Seconds && building.producedResource != AResource.Type.None)
+            {
+                GameManager.resourceGrowth[building.producedResource] += building.upgrades[buildingController.level].productionBoost;
+            }
+
+            buildingController.level++;
+            UpdateUpgradeMenu(buildingController);
+            UpdateHUD();
+        }
     }
 
     public void ActivateBuildMenu(RaycastHit2D hit)
@@ -189,6 +203,7 @@ public class UIController : MonoBehaviour
         upgradePanel.SetActive(false);
         buildPanel.SetActive(false);
         GameObject tile = hit.collider.gameObject;
+        Debug.Log(tile.name);
         BuildingController buildingController = tile.GetComponent<BuildingController>();
         if (buildingController.unlockedForBuilding && InputManager.selectedTile != tile)
         {
@@ -200,12 +215,23 @@ public class UIController : MonoBehaviour
             else
             {
                 UpdateUpgradeMenu(buildingController);
+                upgradePanel.SetActive(true);
+            }
+
+            if (GameManager.currentEvent != null)
+            {
+                eventPanel.SetActive(false);
             }
 
             inputManager.Select(hit);
         }
         else
         {
+            if (GameManager.currentEvent != null)
+            {
+                eventPanel.SetActive(true);
+            }
+
             inputManager.Deselect();
         }
     }
@@ -228,17 +254,17 @@ public class UIController : MonoBehaviour
             productionInfo.text = "";
         }
 
-        if (buildingController.level >= buildingController.building.upgrades.Length)
-        {
-            upgradeButton.interactable = false;
-        }
-        else
-        {
-            upgradeButton.interactable = true;
-        }
-
         if (buildingController.building.upgrades.Length > 0 && buildingController.level < buildingController.building.upgrades.Length)
         {
+            if (buildingController.building.upgrades[buildingController.level].materialCost <= GameManager.resources[AResource.Type.Materials])
+            {
+                upgradeButton.interactable = true;
+            }
+            else
+            {
+                upgradeButton.interactable = false;
+            }
+
             buildingLevel.text = "Level " + (buildingController.level + 1).ToString();
             upgradeInfo.text = "Next upgrade: " + buildingController.building.upgrades[buildingController.level].description + "\nCost: " + buildingController.building.upgrades[buildingController.level].materialCost + " materials";
         }
@@ -246,28 +272,33 @@ public class UIController : MonoBehaviour
         {
             buildingLevel.text = "Max Level";
             upgradeInfo.text = buildingController.building.buildingInfo;
+            upgradeButton.interactable = false;
         }
-
-        upgradePanel.SetActive(true);
     }
 
     public void DisplayEvent()
     {
         TextMeshProUGUI eventTextPanel = eventPanel.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         eventTextPanel.text = GameManager.currentEvent.description;
-
-
-        upgradePanel.SetActive(false);
-        buildPanel.SetActive(false);
-        eventPanel.SetActive(true);
     }
 
     public void UpdateHUD()
     {
+        string modifier;
         for (int i = 0; i < 4; i++)
         {
+            if (GameManager.resourceGrowth[(AResource.Type)i] < 0)
+            {
+                modifier = "";
+                growthText[i].color = negativeColor;
+            }
+            else
+            {
+                modifier = "+";
+                growthText[i].color = neutralColor;
+            }
             resourceText[i].text = GameManager.resources[(AResource.Type)i].ToString();
-            growthText[i].text = "+" + GameManager.resourceGrowth[(AResource.Type)i].ToString();
+            growthText[i].text = modifier + GameManager.resourceGrowth[(AResource.Type)i].ToString();
         }
     }
 
@@ -334,13 +365,13 @@ public class UIController : MonoBehaviour
         Transform buttons = heroHireScreen.transform.GetChild(5);
         Button backButton = buttons.GetChild(1).gameObject.GetComponent<Button>();
         Button nextButton = buttons.GetChild(0).gameObject.GetComponent<Button>();
-        Button hireButton = buttons.GetChild(5).gameObject.GetComponent<Button>();
-        Button infoButton = buttons.GetChild(3).gameObject.GetComponent<Button>();
+        Button hireButton = buttons.GetChild(4).gameObject.GetComponent<Button>();
 
         Transform hero = heroHireScreen.transform.GetChild(4);
         TextMeshProUGUI heroName = heroHireScreen.transform.GetChild(6).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         Image heroSprite = hero.GetChild(1).gameObject.GetComponent<Image>();
-        TextMeshProUGUI heroInfo = hero.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI heroInfo = heroHireScreen.transform.GetChild(8).GetChild(4).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI heroCost = heroHireScreen.transform.GetChild(9).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
 
         heroHireScreenIndex = Mathf.Clamp(heroHireScreenIndex, 0, Mathf.Clamp(HeroManager.recruitableHeroes.Count - 1, 0, int.MaxValue));
 
@@ -350,8 +381,17 @@ public class UIController : MonoBehaviour
             heroName.text = _hero.heroName.name + "\nthe " + _hero.type.heroType;
             heroSprite.enabled = true;
             heroSprite.sprite = _hero.type.icon;
-            infoButton.interactable = true;
-            heroInfo.text = "Faction: " + _hero.type.faction.name + "\n" + _hero.heroName.description + "\nCost: " + _hero.heroName.recruitmentCost;
+            heroInfo.text = _hero.heroName.description;
+            string luxuries;
+            if (_hero.heroName.recruitmentCost == 1)
+            {
+                luxuries = " Luxury item";
+            }
+            else
+            {
+                luxuries = " Luxuries";
+            }
+            heroCost.text = "Cost: " + _hero.heroName.recruitmentCost + luxuries;
 
             if (GameManager.currentEvent != null)
             {
@@ -375,10 +415,10 @@ public class UIController : MonoBehaviour
         else
         {
             heroName.text = "No Heroes\nAvailable";
+            heroCost.text = "No hero selected";
+            heroInfo.text = "No hero selected";
             heroSprite.enabled = false;
-            heroInfo.text = "";
             hireButton.interactable = false;
-            infoButton.interactable = false;
         }
 
         if (heroHireScreenIndex == 0)
@@ -405,13 +445,13 @@ public class UIController : MonoBehaviour
         Transform buttons = heroSelectScreen.transform.GetChild(5);
         Button backButton = buttons.GetChild(1).gameObject.GetComponent<Button>();
         Button nextButton = buttons.GetChild(0).gameObject.GetComponent<Button>();
-        Button useButton = buttons.GetChild(4).gameObject.GetComponent<Button>();
-        Button infoButton = buttons.GetChild(3).gameObject.GetComponent<Button>();
+        Button useButton = buttons.GetChild(3).gameObject.GetComponent<Button>();
 
         Transform hero = heroSelectScreen.transform.GetChild(4);
         TextMeshProUGUI heroName = heroSelectScreen.transform.GetChild(6).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         Image heroSprite = hero.GetChild(1).gameObject.GetComponent<Image>();
-        TextMeshProUGUI heroInfo = hero.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI heroInfo = heroSelectScreen.transform.GetChild(8).GetChild(4).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI heroStrength = heroSelectScreen.transform.GetChild(9).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
 
         GameManager.heroSelectScreenIndex = Mathf.Clamp(GameManager.heroSelectScreenIndex, 0, Mathf.Clamp(HeroManager.recruitedHeroes.Count - 1, 0, int.MaxValue));
 
@@ -420,10 +460,9 @@ public class UIController : MonoBehaviour
             HeroManager.Hero _hero = HeroManager.recruitedHeroes[GameManager.heroSelectScreenIndex];
             heroName.text = _hero.heroName.name + "\nthe " + _hero.type.heroType;
             heroSprite.enabled = true;
-            useButton.interactable = true;
             heroSprite.sprite = _hero.type.icon;
-            infoButton.interactable = true;
-            heroInfo.text = "Faction: " + _hero.type.faction.name + "\n" + _hero.heroName.description + "\nCost: " + _hero.heroName.recruitmentCost;
+            heroInfo.text = _hero.heroName.description;
+            heroStrength.text = "Strength: " + _hero.strength + " / Mentality: " + _hero.mentality;
 
             if (GameManager.currentEvent != null)
             {
@@ -436,15 +475,25 @@ public class UIController : MonoBehaviour
                 useButton.interactable = false;
                 heroSprite.transform.GetChild(0).gameObject.SetActive(false);
             }
+
+            if (_hero.injured)
+            {
+                useButton.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Injured";
+                useButton.interactable = false;
+            }
+            else
+            {
+                useButton.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Use";
+            }
         }
         else
         {
             heroSprite.transform.GetChild(0).gameObject.SetActive(false);
             heroName.text = "No Heroes\nHired";
+            heroInfo.text = "No hero selected";
+            heroStrength.text = "No hero selected";
             heroSprite.enabled = false;
-            heroInfo.text = "";
             useButton.interactable = false;
-            infoButton.interactable = false;
         }
 
         if (GameManager.heroSelectScreenIndex == 0)
@@ -491,7 +540,6 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            Debug.Log(heroFaction.name + ", " + enemyFaction.name + ", neutral");
             combatModifierIcon = combatModifierIcons[1];
         }
         return combatModifierIcon;
@@ -499,8 +547,11 @@ public class UIController : MonoBehaviour
 
     public void HireHero()
     {
+        StartCoroutine(AddResources(new AResource.ResourceBundle(AResource.Type.Luxuries, -HeroManager.recruitableHeroes[heroHireScreenIndex].heroName.recruitmentCost)));
         HeroManager.recruitedHeroes.Add(HeroManager.recruitableHeroes[heroHireScreenIndex]);
         HeroManager.recruitableHeroes.Remove(HeroManager.recruitableHeroes[heroHireScreenIndex]);
+        GameManager.resourceGrowth[AResource.Type.Food]--;
+        UpdateHUD();
         UpdateHeroSelectScreen();
     }
 

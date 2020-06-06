@@ -16,7 +16,8 @@ public class InputManager : MonoBehaviour
 
 	public float colorTransitionSpeed = 0.02f;
 	public Color flashColor = Color.gray;
-	private IEnumerator colorShifter;
+	private IEnumerator shadowColorShifter;
+	private IEnumerator buildingColorShifter;
 
 	public static GameObject selectedTile;
 
@@ -132,6 +133,11 @@ public class InputManager : MonoBehaviour
 				else
 				{
 					Deselect();
+
+					if (GameManager.currentEvent != null)
+					{
+						uiController.eventPanel.SetActive(true);
+					}
 				}
 			}
 
@@ -144,13 +150,16 @@ public class InputManager : MonoBehaviour
 		// Stop previous running selection coroutine and reset their color
 		if (selectedTile != null)
 		{
-			StopCoroutine(colorShifter);
+			StopCoroutine(shadowColorShifter);
+			StopCoroutine(buildingColorShifter);
 			selectedTile.GetComponent<SpriteRenderer>().color = Color.white;
 		}
 
 		// Start new selection coroutine
-		colorShifter = ColorShifter(hit.collider.gameObject);
-		StartCoroutine(colorShifter);
+		buildingColorShifter = ColorShifter(hit.collider.gameObject);
+		shadowColorShifter = ColorShifter(hit.transform.GetChild(0).gameObject);
+		StartCoroutine(shadowColorShifter);
+		StartCoroutine(buildingColorShifter);
 	}
 
 	public void Deselect()
@@ -161,8 +170,10 @@ public class InputManager : MonoBehaviour
 		// Stop previous running selection coroutine and reset their color
 		if (selectedTile != null)
 		{
-			StopCoroutine(colorShifter);
+			StopCoroutine(shadowColorShifter);
+			StopCoroutine(buildingColorShifter);
 			selectedTile.GetComponent<SpriteRenderer>().color = Color.white;
+			selectedTile.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
 		}
 
 		selectedTile = null;

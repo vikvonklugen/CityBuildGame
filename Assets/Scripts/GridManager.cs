@@ -34,7 +34,6 @@ public class GridManager : MonoBehaviour
             for (int col = 0; col < cols; col++)
             {
                 GameObject tile = Instantiate(referenceTile, transform) as GameObject;
-                tile.AddComponent<BoxCollider2D>();
                 tile.name = tileIndex.ToString();
                 tile.layer = 8;
 

@@ -36,21 +36,28 @@ public class HeroManager : MonoBehaviour
 
     Hero ReturnRandomHero()
     {
-        Hero randomHero;
-        randomHero.type = types[random.Next(0, types.Length)];
-        randomHero.heroName = names[random.Next(0, names.Length)];
-        randomHero.injured = false;
-        randomHero.eventsInjured = 0;
-        randomHero.mentality = randomHero.heroName.recruitedMentality;
+        HeroName name = names[random.Next(0, names.Length)];
+        Hero randomHero = new Hero(types[random.Next(0, types.Length)], name, 0, name.recruitedMentality, false, 0);
 
         return randomHero;
     }
 
     [Serializable]
-    public struct Hero
+    public class Hero
     {
+        public Hero(HeroCharacter _type, HeroName _heroName, int _strength, int _mentality, bool _injured, int _eventsInjured)
+        {
+            type = _type;
+            heroName = _heroName;
+            strength = _strength;
+            mentality = _mentality;
+            injured = _injured;
+            eventsInjured = _eventsInjured;
+        }
+
         public HeroCharacter type;
         public HeroName heroName;
+        public int strength;
         public int mentality;
         public bool injured;
         public int eventsInjured;

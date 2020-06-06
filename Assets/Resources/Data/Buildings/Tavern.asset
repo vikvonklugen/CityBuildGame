@@ -10,18 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ab5b2da5c17ad84887ed98ee65c6c18, type: 3}
-  m_Name: MarketBuilding
+  m_Name: Tavern
   m_EditorClassIdentifier: 
-  name: Marketplace
+  name: Tavern
   selectedSound: {fileID: 0}
-  buildingInfo: Allows you to buy weapons and armor
+  buildingInfo: Produces luxuries, which allow you to hire heroes
   buildingSprite: {fileID: 21300000, guid: 6fdbff886f0bb144a8e74bf44c3e6008, type: 3}
-  buildingCost: 0
-  producedResource: 5
-  resourceProducedPerTick: 0
+  buildingCost: 10
+  producedResource: 1
+  resourceProducedPerTick: 1
   timeToBuild: 0
   initialLevel: 0
-  upgrades: []
+  upgrades:
+  - materialCost: 15
+    description: Increases luxury production by 1
+    productionBoost: 1
+  - materialCost: 22
+    description: Increases luxury production by 1
+    productionBoost: 1
   factionsAffectedPositively: []
   factionsAffectedNegatively: []
   factionPositivelyModifier: 0

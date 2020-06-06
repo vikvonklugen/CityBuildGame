@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392d6c5adf454a847aa8db953d51384d, type: 3}
   m_Name: Plarkull
   m_EditorClassIdentifier: 
-  recruitmentCost: 0
+  recruitmentCost: 1
   description: Triggers upset event twice as fast
   recruitedEvent: {fileID: 0}
   deathEvent: {fileID: 0}
@@ -20,5 +20,4 @@ MonoBehaviour:
   combatResultEvent: {fileID: 0}
   upsetEvent: {fileID: 0}
   expectedEventUsageFrequency: 0
-  recruitedHappiness: 0
-  mentality: 0
+  recruitedMentality: 0

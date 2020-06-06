@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Food
   m_EditorClassIdentifier: 
   resource: 0
-  startAmount: 10
+  startAmount: 5
   maximum: 999
   resourceIcon: {fileID: 21300000, guid: e72796f772058d846b2dd0d936adbd0f, type: 3}
   resourceBorder: {fileID: 21300000, guid: d4f7b45482cc6364181861e715e01af2, type: 3}

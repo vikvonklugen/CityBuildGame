@@ -10,18 +10,13 @@ public class EventManager : MonoBehaviour
     private string eventResultText;
     private string buildingName;
 
-    void Start()
-    {
-        
-    }
-
     public void EventFight()
     {
         HeroManager.Hero hero = HeroManager.recruitedHeroes[GameManager.heroSelectScreenIndex];
         CharacterFaction enemyFaction = GameManager.currentEvent.enemyType;
 
         int enemyStrength = random.Next(0, 7);
-        int heroStrength = random.Next(0, 7);
+        int heroStrength = random.Next(0, 7) + hero.strength;
 
         if (hero.type.faction.strongAgainst == enemyFaction)
         {
@@ -33,7 +28,6 @@ public class EventManager : MonoBehaviour
         }
 
         int battleResult = Mathf.Clamp(heroStrength - enemyStrength, -2, 2);
-        Debug.Log(battleResult);
 
         switch (battleResult)
         {
@@ -50,38 +44,52 @@ public class EventManager : MonoBehaviour
                 hero.injured = true;
                 hero.eventsInjured = 3;
                 break;
+
             case -1:
-                eventResultText = "";
+                eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
+                    " However, HERO was injured and lost 1 strength.".Replace("HERO", hero.heroName.name);
+                hero.strength--;
                 hero.injured = true;
                 hero.eventsInjured = 3;
                 break;
+
             case 0:
-                eventResultText = "";
-                GiveReward();
+                eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
+                    " However, HERO was injured.".Replace("HERO", hero.heroName.name);
                 hero.injured = true;
                 hero.eventsInjured = 3;
                 break;
+
             case 1:
-                eventResultText = "";
-                GiveReward();
+                eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name);
                 break;
+
             case 2:
-                eventResultText = "";
-                GiveReward();
+                if (hero.strength < 3)
+                {
+                    eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) + 
+                        " HERO gained 1 strength and mentality!".Replace("HERO", hero.heroName.name);
+                    hero.strength++;
+                }
+                else
+                {
+                    eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
+                        " HERO gained 1 mentality!".Replace("HERO", hero.heroName.name);
+                }
                 hero.mentality++;
                 break;
         }
 
-        GameManager.uiController.FinalizeEvent(eventResultText);
-    }
-
-    void GiveReward()
-    {
-        Debug.Log(GameManager.currentEvent.rewards.Length);
-        foreach (AResource.ResourceBundle resourceBundle in GameManager.currentEvent.rewards)
+        foreach (HeroManager.Hero hiredHero in HeroManager.recruitedHeroes)
         {
-            StartCoroutine(GameManager.uiController.AddResources(resourceBundle));
+            hiredHero.eventsInjured--;
+            if (hiredHero.eventsInjured == 0)
+            {
+                hiredHero.injured = false;
+            }
         }
+
+        GameManager.uiController.FinalizeEvent(eventResultText);
     }
 
     void LoseEvent()
