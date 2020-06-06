@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,11 @@ public class GameManager : MonoBehaviour
         { AResource.Type.Population, 5 }
     };
 
+
+    public static event Action TickEvent = delegate { };
+
+
+
     public UIController UIController;
     public static UIController uiController;
     public HeroManager heroManager;
@@ -40,7 +46,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(TickSystem());
 
-        Object[] eventObjects = Resources.LoadAll("Data/Events/NormalEvents");
+        UnityEngine.Object[] eventObjects = Resources.LoadAll("Data/Events/NormalEvents");
         events = new Event[eventObjects.Length];
         eventObjects.CopyTo(events, 0);
 
@@ -90,6 +96,7 @@ public class GameManager : MonoBehaviour
 
     void EventTick()
     {
+        TickEvent();
         EveryTick();
 
         currentEvent = events[random.Next(0, events.Length)];
