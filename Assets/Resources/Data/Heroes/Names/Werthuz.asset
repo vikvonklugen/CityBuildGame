@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: Werthuz
   m_EditorClassIdentifier: 
   recruitmentCost: 2
-  description: Requires you to pay half his hire cost when fighting
-  recruitedEvent: {fileID: 0}
-  deathEvent: {fileID: 0}
-  combatEvent: {fileID: 0}
-  combatResultEvent: {fileID: 0}
-  upsetEvent: {fileID: 0}
-  expectedEventUsageFrequency: 0
+  description: 'On participate: requires you to pay half his hire cost when fighting'
+  upsetEventText: He destroyed some of your food supplies!
+  upsetMentalityThreshold: -5
   recruitedMentality: 0

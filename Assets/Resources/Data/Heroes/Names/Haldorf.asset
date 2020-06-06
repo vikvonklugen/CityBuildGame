@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: Haldorf
   m_EditorClassIdentifier: 
   recruitmentCost: 1
-  description: Destroys half your current materials
-  recruitedEvent: {fileID: 0}
-  deathEvent: {fileID: 0}
-  combatEvent: {fileID: 0}
-  combatResultEvent: {fileID: 0}
-  upsetEvent: {fileID: 0}
-  expectedEventUsageFrequency: 0
+  description: 'On participate: destroys half your current materials'
+  upsetEventText: He used your materials to build the most expensive thing you could
+    afford!
+  upsetMentalityThreshold: -5
   recruitedMentality: 0

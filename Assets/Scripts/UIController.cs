@@ -1,30 +1,30 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    private UnityEngine.Object[] buildingTypes;
+    public UnityEngine.Object[] buildingTypes;
     private UnityEngine.Object[] resourceTypes;
 
     public InputManager inputManager;
     public HeroManager heroManager;
+    public HeroEventManager heroEventManager;
 
     public GameObject buildPanel;
     public GameObject upgradePanel;
     public GameObject eventPanel;
+    public GameObject heroEventpanel;
     public GameObject eventResultPanel;
     public GameObject topLevelHUD;
     public GameObject heroHireScreen;
     public GameObject heroSelectScreen;
     public GameObject gridHolder;
 
-    public Sprite emptyTileSprite;
+    public Sprite citizenIcon;
 
     private Button upgradeButton;
     private Button destroyButton;
@@ -102,12 +102,23 @@ public class UIController : MonoBehaviour
         UpdateHeroHireScreen();
     }
 
+    public void UpdateBuildMenu()
+    {
+        int buildingIndex = 0;
+        foreach (Building buildingtype in buildingTypes)
+        {
+            TextMeshProUGUI buildingInfoText = buildingListContent.transform.GetChild(buildingIndex).GetChild(3).gameObject.GetComponent<TextMeshProUGUI>();
+            buildingInfoText.text = buildingtype.buildingInfo + "\nCost: " + (buildingtype.buildingCost + GameManager.extraBuildingPrice);
+            buildingIndex++;
+        }
+    }
+
     public void BuildBuilding(Building building)
     {
         BuildingController buildingController = InputManager.selectedTile.GetComponent<BuildingController>();
-        if (buildingController.buildable && GameManager.resources[AResource.Type.Materials] >= building.buildingCost)
+        if (buildingController.buildable && GameManager.resources[AResource.Type.Materials] >= building.buildingCost + GameManager.extraBuildingPrice)
         {
-            StartCoroutine(AddResources(new AResource.ResourceBundle(AResource.Type.Materials, -building.buildingCost)));
+            StartCoroutine(AddResources(new AResource.ResourceBundle(AResource.Type.Materials, -(building.buildingCost + GameManager.extraBuildingPrice))));
             buildingController.buildable = false;
             buildingController.building = building;
             buildingController.productionPerTick = building.resourceProducedPerTick;
@@ -117,6 +128,11 @@ public class UIController : MonoBehaviour
             if (building.producedResource != AResource.Type.Seconds && building.producedResource != AResource.Type.None)
             {
                 GameManager.resourceGrowth[building.producedResource] += buildingController.productionPerTick;
+            }
+
+            if (building.name == "Hospital")
+            {
+                GameManager.hospitalsBuilt--;
             }
 
             UpdateHUD();
@@ -144,10 +160,9 @@ public class UIController : MonoBehaviour
 
             if (buildingTiles.Count == 0)
             {
-                Debug.Log("No buildings to destroy");
                 return null;
             }
-            
+
             buildingController = buildingTiles[random.Next(0, buildingTiles.Count - 1)];
             buildingController.GetComponentInParent<SpriteRenderer>().sprite = null;
         }
@@ -162,6 +177,11 @@ public class UIController : MonoBehaviour
         buildingController.building = null;
         buildingController.buildable = true;
         buildingController.level = 0;
+
+        if (building.name == "Hospital")
+        {
+            GameManager.hospitalsBuilt++;
+        }
 
         if (building.producedResource != AResource.Type.Seconds && building.producedResource != AResource.Type.None)
         {
@@ -207,7 +227,6 @@ public class UIController : MonoBehaviour
         upgradePanel.SetActive(false);
         buildPanel.SetActive(false);
         GameObject tile = hit.collider.gameObject;
-        Debug.Log(tile.name);
         BuildingController buildingController = tile.GetComponent<BuildingController>();
         if (buildingController.unlockedForBuilding && InputManager.selectedTile != tile)
         {
@@ -242,20 +261,18 @@ public class UIController : MonoBehaviour
 
     void UpdateUpgradeMenu(BuildingController buildingController)
     {
-        GameObject upgradeTextPanel = upgradePanel.transform.GetChild(0).gameObject;
-        TextMeshProUGUI buildingName = upgradeTextPanel.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI buildingLevel = upgradeTextPanel.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI productionInfo = upgradeTextPanel.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI upgradeInfo = upgradeTextPanel.transform.GetChild(3).gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI buildingInfo = upgradePanel.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
 
-        buildingName.text = buildingController.building.name;
+        string buildingName;
+        string buildingLevel;
+        string upgradeInfo;
+        string productionInfo = "";
+        string upgradeCost = "";
+
+        buildingName = buildingController.building.name;
         if (buildingController.building.producedResource != AResource.Type.None)
         {
-            productionInfo.text = buildingController.productionPerTick.ToString() + " " + buildingController.building.producedResource + "/tick";
-        }
-        else
-        {
-            productionInfo.text = "";
+            productionInfo = buildingController.productionPerTick.ToString() + " " + buildingController.building.producedResource + "/tick";
         }
 
         if (buildingController.building.upgrades.Length > 0 && buildingController.level < buildingController.building.upgrades.Length)
@@ -269,21 +286,35 @@ public class UIController : MonoBehaviour
                 upgradeButton.interactable = false;
             }
 
-            buildingLevel.text = "Level " + (buildingController.level + 1).ToString();
-            upgradeInfo.text = "Next upgrade: " + buildingController.building.upgrades[buildingController.level].description + "\nCost: " + buildingController.building.upgrades[buildingController.level].materialCost + " materials";
+            buildingLevel = "Level " + (buildingController.level + 1).ToString();
+            upgradeInfo = "Next upgrade: " + buildingController.building.upgrades[buildingController.level].description;
+            upgradeCost = "Cost: " + buildingController.building.upgrades[buildingController.level].materialCost + " materials";
         }
         else
         {
-            buildingLevel.text = "Max Level";
-            upgradeInfo.text = buildingController.building.buildingInfo;
+            buildingLevel = "Max Level";
+            upgradeInfo = buildingController.building.buildingInfo;
             upgradeButton.interactable = false;
         }
+
+        buildingInfo.text = buildingName + "\n" + buildingLevel + "\n" + productionInfo + "\n" + upgradeInfo + "\n" + upgradeCost;
     }
 
     public void DisplayEvent()
     {
+        if (!buildPanel.activeSelf && !upgradePanel.activeSelf)
+        {
+            eventPanel.SetActive(true);
+        }
         TextMeshProUGUI eventTextPanel = eventPanel.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         eventTextPanel.text = GameManager.currentEvent.description;
+    }
+
+    public void DisplayUpsetEvent(HeroManager.Hero hero, string friptaliBattleResult)
+    {
+        TextMeshProUGUI heroEventText = heroEventpanel.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        heroEventText.text = hero.heroName.name + " the " + hero.type.heroType + " got upset! " + hero.heroName.upsetEventText + friptaliBattleResult;
+        heroEventpanel.SetActive(true);
     }
 
     public void UpdateHUD()
@@ -342,16 +373,7 @@ public class UIController : MonoBehaviour
         {
             resourceText[(int)resourceBundle.resourceType].fontSize++;
 
-            if (GameManager.resources[resourceBundle.resourceType] + increment >= 0)
-            {
-                GameManager.resources[resourceBundle.resourceType] += increment;
-            }
-            else
-            {
-                resourceText[(int)resourceBundle.resourceType].fontSize--;
-                break;
-            }
-
+            GameManager.resources[resourceBundle.resourceType] += increment;
             GameManager.uiController.UpdateHUD();
 
             yield return new WaitForSeconds(0.025f);
@@ -489,6 +511,27 @@ public class UIController : MonoBehaviour
             {
                 useButton.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Use";
             }
+
+            if (_hero.heroName.name == "Werthuz" && GameManager.resources[AResource.Type.Luxuries] < _hero.heroName.recruitmentCost / 2)
+            {
+                useButton.interactable = false;
+            }
+
+            bool ableToForceKlpytrill = false;
+            if (_hero.heroName.name != "Klyptrill" && GameManager.forceKlyptrill == true)
+            {
+                foreach (HeroManager.Hero hiredHero in HeroManager.recruitedHeroes)
+                {
+                    if (hiredHero.heroName.name == "Klyptrill" && hiredHero.injured == false)
+                    {
+                        ableToForceKlpytrill = true;
+                    }
+                }
+                if (ableToForceKlpytrill)
+                {
+                    useButton.interactable = false;
+                }
+            }
         }
         else
         {
@@ -519,8 +562,19 @@ public class UIController : MonoBehaviour
         }
     }
 
-    public void FinalizeEvent(string eventResultText)
+    public void FinalizeEvent(string eventResultText, bool sendcitizen)
     {
+        Image heroSprite = eventResultPanel.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Image>();
+        Image enemyFlag = eventResultPanel.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Image>();
+        enemyFlag.sprite = GameManager.currentEvent.enemyType.icon;
+        if (sendcitizen)
+        {
+            heroSprite.sprite = citizenIcon;
+        }
+        else
+        {
+            heroSprite.sprite = HeroManager.recruitedHeroes[GameManager.heroSelectScreenIndex].type.icon;
+        }
         eventPanel.SetActive(false);
         heroSelectScreen.SetActive(false);
 
@@ -551,9 +605,11 @@ public class UIController : MonoBehaviour
 
     public void HireHero()
     {
-        StartCoroutine(AddResources(new AResource.ResourceBundle(AResource.Type.Luxuries, -HeroManager.recruitableHeroes[heroHireScreenIndex].heroName.recruitmentCost)));
-        HeroManager.recruitedHeroes.Add(HeroManager.recruitableHeroes[heroHireScreenIndex]);
-        HeroManager.recruitableHeroes.Remove(HeroManager.recruitableHeroes[heroHireScreenIndex]);
+        HeroManager.Hero hiredHero = HeroManager.recruitableHeroes[heroHireScreenIndex];
+        StartCoroutine(AddResources(new AResource.ResourceBundle(AResource.Type.Luxuries, -hiredHero.heroName.recruitmentCost)));
+        heroEventManager.OnRecruit(hiredHero);
+        HeroManager.recruitedHeroes.Add(hiredHero);
+        HeroManager.recruitableHeroes.Remove(hiredHero);
         GameManager.resourceGrowth[AResource.Type.Food]--;
         UpdateHUD();
         UpdateHeroSelectScreen();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class WinLooseChecker : MonoBehaviour
@@ -47,7 +48,8 @@ public class WinLooseChecker : MonoBehaviour
         if (GameManager.resources[AResource.Type.Population] >= 100)
         {
             GameIsWonEvent();
-
+            infoPanels.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = winText;
+            GameManager.uiController.eventPanel.SetActive(false);
             infoPanels.SetActive(true);
         }
     }
@@ -63,7 +65,8 @@ public class WinLooseChecker : MonoBehaviour
             if (currentTicksWithoutFood >= looseAfterTicksWithoutFood)
             {
                 GameIsLostEvent();
-
+                infoPanels.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = looseText;
+                GameManager.uiController.eventPanel.SetActive(false);
                 infoPanels.SetActive(true);
             }
         }
