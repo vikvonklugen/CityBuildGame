@@ -273,7 +273,7 @@ public class UIController : MonoBehaviour
         }
     }
 
-    void UpdateUpgradeMenu()
+    public void UpdateUpgradeMenu()
     {
         if (InputManager.selectedTile != null)
         {

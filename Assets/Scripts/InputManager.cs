@@ -166,9 +166,9 @@ public class InputManager : MonoBehaviour
 		GameManager._playRandom.PlayUISound("");
 		if (!lockScreen)
 		{
-			Vector3 tilePos = hit.transform.position;
 			StartCoroutine(MoveCamera(hit.transform.position + new Vector3(0, -1, -10)));
 		}
+		GameManager.uiController.UpdateUpgradeMenu();
 		// Start new selection coroutine
 		buildingColorShifter = ColorShifter(hit.collider.gameObject);
 		shadowColorShifter = ColorShifter(hit.transform.GetChild(0).gameObject);

@@ -24,7 +24,7 @@ public class WinLooseChecker : MonoBehaviour
 
     private void OnEnable()
     {
-        UIController.ResourcesChangedEvent += CheckIfLoose;
+        GameManager.TickEvent += CheckIfLoose;
         UIController.ResourcesChangedEvent += CheckIfWon;
     }
 
@@ -74,7 +74,7 @@ public class WinLooseChecker : MonoBehaviour
 
     private void OnDisable()
     {
-        UIController.ResourcesChangedEvent -= CheckIfLoose;
+        GameManager.TickEvent -= CheckIfLoose;
         UIController.ResourcesChangedEvent -= CheckIfWon;
     }
 }
