@@ -11,22 +11,25 @@ public class PlayRandom : MonoBehaviour
     public AudioSource _musicsource;
     public AudioSource _eventmusicsource;
     public AudioSource _uisource;
+    public AudioSource _generalsource;
 
     private RandomSequence _sequence;
 
     [Tooltip("1: good_theme_1, 2: good_theme_2, 3: event_elemental, 4: event_humanoid, 5: event_undead")]
     public AudioClip[] musicTracks;
-
     [Tooltip("1: UIClick, 2: UInext, 3: UIback")]
     public AudioClip[] uiSounds;
-
     public AudioClip[] buildSounds;
+    public AudioClip[] clockTicks;
+    public AudioClip[] buildingDestroyed;
 
     public AudioMixerGroup output;
     public AudioMixerGroup music;
     public AudioMixerGroup ui;
     public float minPitch = .95f;
     public float maxPitch = 1.05f;
+
+    private int tickIndex = 0;
 
     [System.Serializable]
     public class AudioBank
@@ -44,6 +47,27 @@ public class PlayRandom : MonoBehaviour
         _musicsource.outputAudioMixerGroup = music;
         _eventmusicsource.outputAudioMixerGroup = music;
         _uisource.outputAudioMixerGroup = ui;
+        _generalsource.outputAudioMixerGroup = output;
+    }
+
+    public void PlayTickSound()
+    {
+        _generalsource.PlayOneShot(clockTicks[tickIndex]);
+
+        if (tickIndex == 0)
+        {
+            tickIndex = 1;
+        }
+        else
+        {
+            tickIndex = 0;
+        }
+    }
+
+    public void PlayDestroySound()
+    {
+        Debug.Log("destroy");
+        _generalsource.PlayOneShot(buildingDestroyed[random.Next(0, buildingDestroyed.Length - 1)]);
     }
 
     public void PlayUISound(string button)

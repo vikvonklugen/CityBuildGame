@@ -45,7 +45,7 @@ public class WinLooseChecker : MonoBehaviour
 
     private void CheckIfWon()
     {
-        if (GameManager.resources[AResource.Type.Population] >= 100)
+        if (GameManager.resources[AResource.Type.Population] >= 15)
         {
             GameIsWonEvent();
             infoPanels.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = winText;

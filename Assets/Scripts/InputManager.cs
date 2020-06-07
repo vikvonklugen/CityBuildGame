@@ -153,7 +153,8 @@ public class InputManager : MonoBehaviour
 		}
 
 		GameManager._playRandom.PlayUISound("");
-
+		Vector3 tilePos = hit.transform.position;
+		StartCoroutine(MoveCamera(hit.transform.position + new Vector3(0, -1, -10)));
 		// Start new selection coroutine
 		buildingColorShifter = ColorShifter(hit.collider.gameObject);
 		shadowColorShifter = ColorShifter(hit.transform.GetChild(0).gameObject);
@@ -201,6 +202,16 @@ public class InputManager : MonoBehaviour
 #else
 		return Input.mousePosition;
 #endif
+	}
+
+	IEnumerator MoveCamera(Vector3 targetPos)
+	{
+		Vector3 direction = targetPos - cam.transform.position;
+		while (cam.transform.position != targetPos)
+		{
+			cam.transform.position += direction / 15f;
+			yield return new WaitForEndOfFrame();
+		}
 	}
 
 	// Shifts colors of selected tile

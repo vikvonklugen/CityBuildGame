@@ -137,6 +137,11 @@ public class UIController : MonoBehaviour
                 GameManager.hospitalsBuilt--;
             }
 
+            if (building.name == "Housing")
+            {
+                StartCoroutine(AddResources(new AResource.ResourceBundle(AResource.Type.Population, 1)));
+            }
+
             UpdateHUD();
             buildPanel.SetActive(false);
             UpdateUpgradeMenu();
@@ -182,7 +187,12 @@ public class UIController : MonoBehaviour
 
         if (building.name == "Hospital")
         {
-            GameManager.hospitalsBuilt++;
+            GameManager.hospitalsBuilt--;
+        }
+
+        if (building.name == "Housing")
+        {
+            StartCoroutine(AddResources(new AResource.ResourceBundle(AResource.Type.Population, -1)));
         }
 
         if (building.producedResource != AResource.Type.Seconds && building.producedResource != AResource.Type.None)
@@ -190,6 +200,7 @@ public class UIController : MonoBehaviour
             GameManager.resourceGrowth[building.producedResource] -= buildingController.productionPerTick;
         }
 
+        GameManager._playRandom.PlayDestroySound();
         UpdateHUD();
         upgradePanel.SetActive(false);
         inputManager.Deselect();
@@ -282,6 +293,12 @@ public class UIController : MonoBehaviour
                 if (buildingController.building.producedResource != AResource.Type.None)
                 {
                     productionInfo = buildingController.productionPerTick.ToString() + " " + buildingController.building.producedResource + "/tick";
+
+                    if (buildingController.building.name == "Housing")
+                    {
+                        productionInfo = "+1 Population";
+
+                    }
                 }
 
                 if (buildingController.building.upgrades.Length > 0 && buildingController.level < buildingController.building.upgrades.Length)

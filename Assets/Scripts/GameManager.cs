@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
         { AResource.Type.Food, 0 },
         { AResource.Type.Materials, 0 },
         { AResource.Type.Luxuries, 0 },
-        { AResource.Type.Population, 5 }
+        { AResource.Type.Population, 1 }
     };
 
 
@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
 
             yield return new WaitUntil(() => UIController.clockAnimationFinished);
             UIController.clockAnimationFinished = false;
+            playRandom.PlayTickSound();
 
             if (clockFillAmount == 1)
             {
