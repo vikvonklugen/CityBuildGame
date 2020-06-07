@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(playRandom.PlayMusicTrack(0));
         while (true)
         {
-            yield return new WaitForSecondsRealtime(7.5f - (14 * Time.deltaTime));
+            yield return new WaitForSecondsRealtime(7.5f - (18 * Time.deltaTime));
 
             clockFillAmount += 0.25f;
             StartCoroutine(uiController.SetClock(clockFillAmount, 0.01f));

@@ -1659,6 +1659,7 @@ MonoBehaviour:
   maxZoom: 3
   mobilePinchSensitivity: 0.01
   PCScrollSensitivity: 1
+  lockScreen: 0
   cameraBounds: {x: 1.5, y: 2.5}
 --- !u!1 &193996259
 GameObject:
@@ -7621,7 +7622,7 @@ MonoBehaviour:
   buildPanel: {fileID: 641473611843613130}
   upgradePanel: {fileID: 6310663367936126209}
   eventPanel: {fileID: 2964207511710760855}
-  heroEventpanel: {fileID: 0}
+  heroEventpanel: {fileID: 397171467}
   eventResultPanel: {fileID: 6520410154488835417}
   topLevelHUD: {fileID: 1123947710}
   heroHireScreen: {fileID: 620034285}
@@ -11158,7 +11159,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.192
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -20893,6 +20894,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

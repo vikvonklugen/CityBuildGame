@@ -27,6 +27,7 @@ public class InputManager : MonoBehaviour
 	public float maxZoom = 8;
 	public float mobilePinchSensitivity = 0.01f;
 	public float PCScrollSensitivity = 1f;
+	public bool lockScreen = true;
 	private bool isMultiTouching;
 
 	public Vector2 cameraBounds = new Vector2(5f, 5f);
@@ -40,34 +41,38 @@ public class InputManager : MonoBehaviour
 
 	void Update()
 	{
-		// Zoom on mobile with 2 fingers
-		if (Input.touchCount == 2)
+		if (!lockScreen)
 		{
-			isMultiTouching = true;
-
-			if (Input.GetTouch(0).phase == TouchPhase.Began || Input.GetTouch(1).phase == TouchPhase.Began)
+			// Zoom on mobile with 2 fingers
+			if (Input.touchCount == 2)
 			{
-				touchStart = true;
+				isMultiTouching = true;
+
+				if (Input.GetTouch(0).phase == TouchPhase.Began || Input.GetTouch(1).phase == TouchPhase.Began)
+				{
+					touchStart = true;
+				}
+
+				// Calculate difference between previous distance between 2 fingers and current distance between 2 fingers
+				Touch touchZero = Input.GetTouch(0);
+				Touch touchOne = Input.GetTouch(1);
+
+				Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+				Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+				float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+				float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
+
+				float difference = currentMagnitude - prevMagnitude;
+
+				// Apply that difference to zoom function
+				Zoom(difference * mobilePinchSensitivity);
 			}
 
-			// Calculate difference between previous distance between 2 fingers and current distance between 2 fingers
-			Touch touchZero = Input.GetTouch(0);
-			Touch touchOne = Input.GetTouch(1);
-
-			Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-			Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-
-			float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
-			float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
-
-			float difference = currentMagnitude - prevMagnitude;
-
-			// Apply that difference to zoom function
-			Zoom(difference * mobilePinchSensitivity);
+			// Zoom on PC with scrollwheel
+			Zoom(Input.GetAxis("Mouse ScrollWheel") * PCScrollSensitivity);
 		}
 
-		// Zoom on PC with scrollwheel (not working for me, it is for some reason always giving me a value of zero on my scroll wheel input)
-		Zoom(Input.GetAxis("Mouse ScrollWheel") * PCScrollSensitivity);
 
 		// Initialise some values on initial mouse press
 		if (Input.GetMouseButtonDown(0))
@@ -98,14 +103,20 @@ public class InputManager : MonoBehaviour
 				else
 				{
 					// Move the camera
-					cam.transform.position += direction;
+					if (!lockScreen)
+					{
+						cam.transform.position += direction;
+					}
 				}
 
-				// Clamp camera pos to bounded area
-				cam.transform.position = new Vector3(
-					Mathf.Clamp(cam.transform.position.x, -cameraBounds.x, cameraBounds.x),
-					Mathf.Clamp(cam.transform.position.y, -cameraBounds.y, cameraBounds.y),
-					-10f);
+				if (!lockScreen)
+				{
+					// Clamp camera pos to bounded area
+					cam.transform.position = new Vector3(
+						Mathf.Clamp(cam.transform.position.x, -cameraBounds.x, cameraBounds.x),
+						Mathf.Clamp(cam.transform.position.y, -cameraBounds.y, cameraBounds.y),
+						-10f);
+				}
 
 				// Check if player is panning or clicking
 				if (!panning)
@@ -153,8 +164,11 @@ public class InputManager : MonoBehaviour
 		}
 
 		GameManager._playRandom.PlayUISound("");
-		Vector3 tilePos = hit.transform.position;
-		StartCoroutine(MoveCamera(hit.transform.position + new Vector3(0, -1, -10)));
+		if (!lockScreen)
+		{
+			Vector3 tilePos = hit.transform.position;
+			StartCoroutine(MoveCamera(hit.transform.position + new Vector3(0, -1, -10)));
+		}
 		// Start new selection coroutine
 		buildingColorShifter = ColorShifter(hit.collider.gameObject);
 		shadowColorShifter = ColorShifter(hit.transform.GetChild(0).gameObject);
@@ -206,11 +220,14 @@ public class InputManager : MonoBehaviour
 
 	IEnumerator MoveCamera(Vector3 targetPos)
 	{
-		Vector3 direction = targetPos - cam.transform.position;
-		while (cam.transform.position != targetPos)
+		if (!lockScreen)
 		{
-			cam.transform.position += direction / 15f;
-			yield return new WaitForEndOfFrame();
+			Vector3 direction = targetPos - cam.transform.position;
+			while (cam.transform.position != targetPos)
+			{
+				cam.transform.position += direction / 15f;
+				yield return new WaitForEndOfFrame();
+			}
 		}
 	}
 

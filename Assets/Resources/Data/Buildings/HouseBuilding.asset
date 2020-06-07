@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Housing
   selectedSound: {fileID: 8300000, guid: cfb919a6c264f6b418ddb6fdf5e11021, type: 3}
-  buildingInfo: Increases population growth
+  buildingInfo: Increases population
   buildingSprite: {fileID: 21300000, guid: 3632dccc1c4a7ca4b8baebdfe9841845, type: 3}
   buildingCost: 15
   producedResource: 3
-  resourceProducedPerTick: 1
+  resourceProducedPerTick: 0
   timeToBuild: 0
   initialLevel: 0
   upgrades: []

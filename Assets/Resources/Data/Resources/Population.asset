@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Population
   m_EditorClassIdentifier: 
   resource: 3
-  startAmount: 0
+  startAmount: 1
   maximum: 999
   resourceIcon: {fileID: 21300000, guid: 0577c566912ac8549801332ccbe2fd98, type: 3}
   resourceBorder: {fileID: 21300000, guid: b4af405facdb17f45bd6ce2c2c881c38, type: 3}
