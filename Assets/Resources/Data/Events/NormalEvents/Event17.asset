@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, a necromancer was spotted raising the dead and making the skeletons
     dance together. They are far better dancers than us. Unacceptable!
-  failAction: Being a dancer, HERO joined in on the fun.
-  eventLoseText: However, they swarmed your BUILDING!
-  eventWinText: 
+  eventLoseText: X tried to out-dance the skeletons, but only managed to do the Carlton,
+    bringing shame to us all.
+  eventWinText: X danced their heart out, showing those skeletons that the living
+    are better dancers than the dead.
   enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
   rewards:
   - resourceType: 0

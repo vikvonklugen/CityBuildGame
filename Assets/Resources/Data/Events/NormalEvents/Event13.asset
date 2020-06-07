@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, imps and fairies keep casting spells where we say the opposite
     of what we meant. My mother thinks I hate her. Please help!
-  failAction: HERO got outnumbered by the sheer amount of spells.
-  eventLoseText: 'Someone said: "Build a BUILDING!", and you can guess what happened
-    next...'
-  eventWinText: 
+  eventLoseText: X tried to fight the imps, but they just flew around casting various
+    hexes on X, who has been turned into a newt!
+  eventWinText: 'X yelled awful obscenities at the imps, but their spell made it
+    sound like very nice compliments. They were so elated that they left us alone. '
   enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
   rewards:
   - resourceType: 0

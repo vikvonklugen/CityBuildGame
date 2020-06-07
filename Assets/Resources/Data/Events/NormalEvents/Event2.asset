@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, gnomes are popping out of the ground under our buildings, causing
     structural instability. Hurry, before our buildings collapse!
-  failAction: HERO fell into one of many gnome-holes.
-  eventLoseText: The gnomes managed to collapse your BUILDING!
-  eventWinText: 
+  eventLoseText: The gnomes were too quick for X, who ended up working themselves
+    into an angry fit before storming off.
+  eventWinText: "X played the best whack-a-mole game you\u2019ve ever seen, successfully
+    repelling the gnomes."
   enemyType: {fileID: 11400000, guid: f597d586e79837341b3ab22602d1c041, type: 2}
   rewards:
   - resourceType: 0

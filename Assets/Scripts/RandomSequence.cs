@@ -17,48 +17,31 @@ namespace Vasya
 
     public class RandomSequence
     {
-        int bankIndex = -1;
+        public static int bankIndex = -1;
 
-        public void ResetBankIndex()
-        {
-            bankIndex = -1;
-        }
-
-        private readonly List<WeightenedAudioClip> _clips;
+        private readonly PlayRandom.AudioBank[] _banks;
         private readonly AudioSource _source;
 
-        public RandomSequence(AudioSource source, IEnumerable<WeightenedAudioClip> clips)
+        public RandomSequence(AudioSource source, PlayRandom.AudioBank[] banks)
         {
             _source = source;
-            _clips = clips.ToList();
+            _banks = banks;
         }
 
         public IEnumerator Play(float minPitch, float maxPitch)
         {
-            while (true)
+            while (bankIndex < _banks.Length - 1)
             {
                 bankIndex++;
-                var clips = _clips.Where(c => c.clip != _source.clip).ToArray();
-                var clip = GetNextRandomClip(bank[bankIndex]);
+                var clip = GetNextRandomClip(_banks[bankIndex].Clips);
                 _source.clip = clip;
-                _source.Play();
+                _source.PlayOneShot(_source.clip);
                 _source.pitch = Random.Range(minPitch, maxPitch);
 
-                //Debug.Log($"Playing new clip {clip.name}");
+                Debug.Log($"Playing new clip {clip.name}");
 
                 yield return new WaitForSeconds(clip.length);
             }
-        }
-
-        public void PlaySingle(float minPitch, float maxPitch)
-        {
-            var clips = _clips.Where(c => c.clip != _source.clip).ToArray();
-            var clip = GetNextRandomClip(clips);
-            _source.clip = clip;
-            _source.PlayOneShot(clip, 1F);
-            _source.pitch = Random.Range(minPitch, maxPitch);
-
-            //Debug.Log($"Playing new clip {clip.name}");
         }
 
         int GetTotalWeights(IEnumerable<WeightenedAudioClip> clips)

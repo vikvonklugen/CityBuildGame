@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public static UIController uiController;
     public HeroManager heroManager;
     public PlayRandom playRandom;
+    public static PlayRandom _playRandom;
 
     public static Event currentEvent;
 
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         uiController = UIController;
+        _playRandom = playRandom;
 
         StartCoroutine(TickSystem());
 
@@ -70,9 +72,11 @@ public class GameManager : MonoBehaviour
 
     IEnumerator TickSystem()
     {
+        playRandom.StartSound();
+        StartCoroutine(playRandom.PlayMusicTrack(0));
         while (true)
         {
-            yield return new WaitForSecondsRealtime(7.5f);
+            yield return new WaitForSecondsRealtime(7.5f - (14 * Time.deltaTime));
 
             clockFillAmount += 0.25f;
             StartCoroutine(uiController.SetClock(clockFillAmount, 0.01f));
@@ -87,10 +91,15 @@ public class GameManager : MonoBehaviour
                 yield return new WaitUntil(() => eventProcessed);
                 eventProcessed = false;
                 currentEvent = null;
+                playRandom.StartSound();
+                StartCoroutine(playRandom.CrossFade());
+                StartCoroutine(playRandom.PlayMusicTrack(0));
             }
             else if (clockFillAmount == 0.5f)
             {
                 PopulationTick();
+                playRandom.StartSound();
+                StartCoroutine(playRandom.PlayMusicTrack(1));
             }
         }
     }
@@ -110,6 +119,19 @@ public class GameManager : MonoBehaviour
         uiController.DisplayEvent();
         uiController.UpdateHeroSelectScreen();
         uiController.UpdateHeroHireScreen();
+
+        if (currentEvent.enemyType.name == "Astral")
+        {
+            StartCoroutine(playRandom.PlayMusicTrack(2));
+        }
+        else if (currentEvent.enemyType.name == "Humanoid")
+        {
+            StartCoroutine(playRandom.PlayMusicTrack(3));
+        }
+        else if(currentEvent.enemyType.name == "Darkness")
+        {
+            StartCoroutine(playRandom.PlayMusicTrack(4));
+        }
     }
 
     void EveryTick()
@@ -128,7 +150,5 @@ public class GameManager : MonoBehaviour
         }
 
         uiController.UpdateHUD();
-
-        playRandom.StartSound();
     }
 }

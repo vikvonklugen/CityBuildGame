@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tavern
   m_EditorClassIdentifier: 
   name: Tavern
-  selectedSound: {fileID: 0}
+  selectedSound: {fileID: 8300000, guid: d77e5eb9a9dd6bb4dacf12c2c9482726, type: 3}
   buildingInfo: Produces luxuries, which allow you to hire heroes
   buildingSprite: {fileID: 21300000, guid: 6fdbff886f0bb144a8e74bf44c3e6008, type: 3}
   buildingCost: 10

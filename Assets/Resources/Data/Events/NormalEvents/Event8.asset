@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, space whales are flying towards our town leaving their gooey
     essence everywhere. Save us from a sticky death!
-  failAction: HERO managed to shoot down one of the whales!
-  eventLoseText: However, it landed right on your BUILDING!
-  eventWinText: 
+  eventLoseText: X went to mee the whales in battle but was unprepared for their
+    gooeyness and ended up stuck in a sticky mess.
+  eventWinText: 'X was able to lob a harpoon at the space whales, chasing them away
+    with stories of his white whale. '
   enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
   rewards:
   - resourceType: 0

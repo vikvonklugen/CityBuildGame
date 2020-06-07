@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FarmBuilding
   m_EditorClassIdentifier: 
   name: Farm
-  selectedSound: {fileID: 0}
+  selectedSound: {fileID: 8300000, guid: a260921c91633104b899c19fc8f72477, type: 3}
   buildingInfo: Produces food for your heroes.
   buildingSprite: {fileID: 21300000, guid: 23b7e86b0efe243439e1868e4d83b576, type: 3}
   buildingCost: 10

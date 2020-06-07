@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: "Lord, the dead have come back to life and they won\u2019t stop telling
     stories about how easy our generation has things. Save us from boredom!"
-  failAction: HERO decided to reason with the complaining dead,
-  eventLoseText: but they destroyed your BUILDING in anger!
-  eventWinText: 
+  eventLoseText: X was convinced by the dead and came back to town telling us about
+    how lazy we were, angering everyone.
+  eventWinText: "X showed the dead how hard life still is but they didn\u2019t listen,
+    so X cut them to pieces."
   enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
   rewards:
   - resourceType: 0

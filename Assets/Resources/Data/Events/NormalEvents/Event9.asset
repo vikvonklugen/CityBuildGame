@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, fire elementals keep popping out of our chimneys. Protect us
     from their chicanery!
-  failAction: Trying to catch one of them, HERO got his bottom burnt!
-  eventLoseText: In the meantime, your BUILDING caught fire!
-  eventWinText: 
+  eventLoseText: The elementals out-maneuvered X, setting fire to their clothes.
+    X, embarrassed by their nakedness, ran away.
+  eventWinText: X put water balloons in the chimneys, causing the fire elementals
+    to put themselves out. What genius!
   enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
   rewards:
   - resourceType: 0

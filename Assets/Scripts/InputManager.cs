@@ -1,10 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
@@ -153,6 +149,7 @@ public class InputManager : MonoBehaviour
 			StopCoroutine(shadowColorShifter);
 			StopCoroutine(buildingColorShifter);
 			selectedTile.GetComponent<SpriteRenderer>().color = Color.white;
+			selectedTile.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
 		}
 
 		// Start new selection coroutine

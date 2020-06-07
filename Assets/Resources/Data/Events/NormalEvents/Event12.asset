@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, earth elementals are creating very offensive works of art outside
     the city walls. Save us from their obscenity!
-  failAction: HERO wasn't able to remove the mud-like paint.
-  eventLoseText: After having daubed your BUILDING, there was no way back. It had
-    to be taken down!
-  eventWinText: 
+  eventLoseText: "X was so offended by the elemental art that they refuse to interact
+    with anyone. X won\u2019t even leave their room!"
+  eventWinText: With the skill of a highly esteemed art critic, X convinced the elementals
+    that their art was bad, and they destroyed it.
   enemyType: {fileID: 11400000, guid: 31df89a7d13b3224b918652b625b2c47, type: 2}
   rewards:
   - resourceType: 0

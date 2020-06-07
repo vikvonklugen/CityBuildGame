@@ -8,7 +8,6 @@ using UnityEngine;
 public class Event : ScriptableObject
 {
     public string description;
-    public string failAction;
     public string eventLoseText;
     public string eventWinText;
     public CharacterFaction enemyType;

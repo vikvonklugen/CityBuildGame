@@ -124,6 +124,7 @@ public class UIController : MonoBehaviour
             buildingController.productionPerTick = building.resourceProducedPerTick;
             buildingController.returnedMaterialsOnDestroy += (int)Mathf.Floor(building.buildingCost / 2);
             InputManager.selectedTile.GetComponent<SpriteRenderer>().sprite = building.buildingSprite;
+            GameManager._playRandom.PlayBuildingSound(buildingController.building, true);
 
             if (building.producedResource != AResource.Type.Seconds && building.producedResource != AResource.Type.None)
             {
@@ -137,7 +138,7 @@ public class UIController : MonoBehaviour
 
             UpdateHUD();
             buildPanel.SetActive(false);
-            UpdateUpgradeMenu(buildingController);
+            UpdateUpgradeMenu();
             upgradePanel.SetActive(true);
         }
     }
@@ -217,8 +218,8 @@ public class UIController : MonoBehaviour
             }
 
             buildingController.level++;
-            UpdateUpgradeMenu(buildingController);
             UpdateHUD();
+            UpdateUpgradeMenu();
         }
     }
 
@@ -237,7 +238,8 @@ public class UIController : MonoBehaviour
             }
             else
             {
-                UpdateUpgradeMenu(buildingController);
+                UpdateUpgradeMenu();
+                GameManager._playRandom.PlayBuildingSound(buildingController.building);
                 upgradePanel.SetActive(true);
             }
 
@@ -259,45 +261,54 @@ public class UIController : MonoBehaviour
         }
     }
 
-    void UpdateUpgradeMenu(BuildingController buildingController)
+    void UpdateUpgradeMenu()
     {
-        TextMeshProUGUI buildingInfo = upgradePanel.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-
-        string buildingName;
-        string buildingLevel;
-        string upgradeInfo;
-        string productionInfo = "";
-        string upgradeCost = "";
-
-        buildingName = buildingController.building.name;
-        if (buildingController.building.producedResource != AResource.Type.None)
+        if (InputManager.selectedTile != null)
         {
-            productionInfo = buildingController.productionPerTick.ToString() + " " + buildingController.building.producedResource + "/tick";
-        }
+            BuildingController buildingController = InputManager.selectedTile.GetComponent<BuildingController>();
 
-        if (buildingController.building.upgrades.Length > 0 && buildingController.level < buildingController.building.upgrades.Length)
-        {
-            if (buildingController.building.upgrades[buildingController.level].materialCost <= GameManager.resources[AResource.Type.Materials])
+            if (buildingController.building != null)
             {
-                upgradeButton.interactable = true;
-            }
-            else
-            {
-                upgradeButton.interactable = false;
+                TextMeshProUGUI buildingInfo = upgradePanel.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+
+                string buildingName;
+                string buildingLevel;
+                string upgradeInfo;
+                string productionInfo = "";
+                string upgradeCost = "";
+
+                buildingName = buildingController.building.name;
+                if (buildingController.building.producedResource != AResource.Type.None)
+                {
+                    productionInfo = buildingController.productionPerTick.ToString() + " " + buildingController.building.producedResource + "/tick";
+                }
+
+                if (buildingController.building.upgrades.Length > 0 && buildingController.level < buildingController.building.upgrades.Length)
+                {
+                    if (buildingController.building.upgrades[buildingController.level].materialCost <= GameManager.resources[AResource.Type.Materials])
+                    {
+                        upgradeButton.interactable = true;
+                    }
+                    else
+                    {
+                        upgradeButton.interactable = false;
+                    }
+
+                    buildingLevel = "Level " + (buildingController.level + 1).ToString();
+                    upgradeInfo = "Next upgrade: " + buildingController.building.upgrades[buildingController.level].description;
+                    upgradeCost = "Cost: " + buildingController.building.upgrades[buildingController.level].materialCost + " materials";
+                }
+                else
+                {
+                    buildingLevel = "Max Level";
+                    upgradeInfo = buildingController.building.buildingInfo;
+                    upgradeButton.interactable = false;
+                }
+
+                buildingInfo.text = buildingName + "\n" + buildingLevel + "\n" + productionInfo + "\n" + upgradeInfo + "\n" + upgradeCost;
             }
 
-            buildingLevel = "Level " + (buildingController.level + 1).ToString();
-            upgradeInfo = "Next upgrade: " + buildingController.building.upgrades[buildingController.level].description;
-            upgradeCost = "Cost: " + buildingController.building.upgrades[buildingController.level].materialCost + " materials";
         }
-        else
-        {
-            buildingLevel = "Max Level";
-            upgradeInfo = buildingController.building.buildingInfo;
-            upgradeButton.interactable = false;
-        }
-
-        buildingInfo.text = buildingName + "\n" + buildingLevel + "\n" + productionInfo + "\n" + upgradeInfo + "\n" + upgradeCost;
     }
 
     public void DisplayEvent()
@@ -374,7 +385,8 @@ public class UIController : MonoBehaviour
             resourceText[(int)resourceBundle.resourceType].fontSize++;
 
             GameManager.resources[resourceBundle.resourceType] += increment;
-            GameManager.uiController.UpdateHUD();
+            UpdateHUD();
+            UpdateUpgradeMenu();
 
             yield return new WaitForSeconds(0.025f);
 

@@ -27,11 +27,11 @@ public class EventManager : MonoBehaviour
 
             if (hero.type.faction.strongAgainst == enemyFaction)
             {
-                heroStrength += 2;
+                heroStrength++;
             }
             else if (hero.type.faction.weakAgainst == enemyFaction)
             {
-                heroStrength -= 2;
+                heroStrength--;
             }
 
             hero.mentality++;
@@ -55,8 +55,7 @@ public class EventManager : MonoBehaviour
                         buildingName = "empty field";
                     }
                     eventResultText =
-                        GameManager.currentEvent.failAction.Replace("HERO", hero.heroName.name) + " " +
-                        GameManager.currentEvent.eventLoseText.Replace("BUILDING", buildingName.ToLower()) + " " +
+                        GameManager.currentEvent.eventLoseText.Replace("X", hero.heroName.name) + " " +
                         hero.heroName.name + " is injured and lost 1 mentality.";
                     hero.injured = true;
                     hero.eventsInjured = 3 + GameManager.extraInjuryDuration;
@@ -64,7 +63,7 @@ public class EventManager : MonoBehaviour
                     break;
 
                 case -1:
-                    eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
+                    eventResultText = GameManager.currentEvent.eventWinText.Replace("X", hero.heroName.name) +
                         " However, HERO was injured and lost 1 strength.".Replace("HERO", hero.heroName.name);
                     hero.strength--;
                     hero.injured = true;
@@ -72,26 +71,26 @@ public class EventManager : MonoBehaviour
                     break;
 
                 case 0:
-                    eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
+                    eventResultText = GameManager.currentEvent.eventWinText.Replace("X", hero.heroName.name) +
                         " However, HERO was injured.".Replace("HERO", hero.heroName.name);
                     hero.injured = true;
                     hero.eventsInjured = 3 + GameManager.extraInjuryDuration;
                     break;
 
                 case 1:
-                    eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name);
+                    eventResultText = GameManager.currentEvent.eventWinText.Replace("X", hero.heroName.name);
                     break;
 
                 case 2:
                     if (hero.strength < 3)
                     {
-                        eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
+                        eventResultText = GameManager.currentEvent.eventWinText.Replace("X", hero.heroName.name) +
                             " HERO gained 1 strength and mentality!".Replace("HERO", hero.heroName.name);
                         hero.strength++;
                     }
                     else
                     {
-                        eventResultText = GameManager.currentEvent.eventWinText.Replace("HERO", hero.heroName.name) +
+                        eventResultText = GameManager.currentEvent.eventWinText.Replace("X", hero.heroName.name) +
                             " HERO gained 1 mentality!".Replace("HERO", hero.heroName.name);
                     }
                     hero.mentality++;
@@ -107,11 +106,9 @@ public class EventManager : MonoBehaviour
                 buildingName = "empty field";
             }
 
-            string citizentext = GameManager.currentEvent.failAction.Replace("HERO", "the random citizen");
+            string citizentext = GameManager.currentEvent.eventLoseText.Replace("X", "the random citizen");
 
-            eventResultText =
-                char.ToUpper(citizentext[0]) + citizentext.Substring(1) + " " +
-                GameManager.currentEvent.eventLoseText.Replace("BUILDING", buildingName.ToLower());
+            eventResultText = char.ToUpper(citizentext[0]) + citizentext.Substring(1);
         }
 
         foreach (HeroManager.Hero hiredHero in HeroManager.recruitedHeroes)

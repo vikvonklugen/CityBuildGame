@@ -65,7 +65,7 @@ public class WinLooseChecker : MonoBehaviour
             if (currentTicksWithoutFood >= looseAfterTicksWithoutFood)
             {
                 GameIsLostEvent();
-                infoPanels.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = looseText;
+                infoPanels.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = looseText;
                 GameManager.uiController.eventPanel.SetActive(false);
                 infoPanels.SetActive(true);
             }

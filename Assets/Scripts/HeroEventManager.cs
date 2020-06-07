@@ -60,7 +60,7 @@ public class HeroEventManager : MonoBehaviour
         switch (hero.heroName.name)
         {
             case "Haldorf":
-
+                GameManager.uiController.DestroyBuilding(true);
                 break;
 
             case "Lartrid":
@@ -76,11 +76,11 @@ public class HeroEventManager : MonoBehaviour
 
                 if (hero.type.faction.strongAgainst == randomHero.type.faction)
                 {
-                    heroStrength += 2;
+                    heroStrength++;
                 }
                 else if (hero.type.faction.weakAgainst == randomHero.type.faction)
                 {
-                    heroStrength -= 2;
+                    heroStrength--;
                 }
 
                 int battleResult = Mathf.Clamp(heroStrength - randomHeroStrength, -2, 2);

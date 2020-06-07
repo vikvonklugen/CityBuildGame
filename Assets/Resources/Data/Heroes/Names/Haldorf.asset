@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recruitmentCost: 1
   description: 'On participate: destroys half your current materials'
-  upsetEventText: He used your materials to build the most expensive thing you could
-    afford!
+  upsetEventText: He destroyed one of your building!
   upsetMentalityThreshold: -5
   recruitedMentality: 0

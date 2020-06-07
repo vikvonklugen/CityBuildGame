@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Lord, bugbears, which are neither bugs nor bears, are rampaging towards
     our town. Save us!
-  failAction: Confused on if he should bring a bear trap or a bug net, HERO wasted
-    all his time.
-  eventLoseText: Your BUILDING was overrun by bugbears!
-  eventWinText: 
+  eventLoseText: X, assuming that the enemies were bugs the size of bears, was woefully
+    underprepared and failed to stop the bugbears.
+  eventWinText: X valiantly charged the curiously named bugbears, dispersing them
+    back to their buggy beary homes.
   enemyType: {fileID: 11400000, guid: f597d586e79837341b3ab22602d1c041, type: 2}
   rewards:
   - resourceType: 0
