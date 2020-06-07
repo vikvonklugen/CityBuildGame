@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18622f99f583a00408d69d0f758ca256, type: 3}
   m_Name: Humanoid
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a72eec59438a3ad4090bb1d3903ea5c8, type: 3}
   strongAgainst: {fileID: 11400000, guid: 16e38da664f555c4ba55a2940fe80401, type: 2}
   weakAgainst: {fileID: 11400000, guid: 4b8deced264a71f42b29fbe29c5bf705, type: 2}

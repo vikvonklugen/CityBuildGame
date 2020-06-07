@@ -36,7 +36,7 @@ public class PlayRandom : MonoBehaviour
 
     public AudioBank[] _audioBanks;
 
-    void Start()
+    public void InitializeSoundPlayer()
     {
         _sequence = new RandomSequence(_randomsource, _audioBanks);
 

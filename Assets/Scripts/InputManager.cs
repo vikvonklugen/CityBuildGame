@@ -152,6 +152,8 @@ public class InputManager : MonoBehaviour
 			selectedTile.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
 		}
 
+		GameManager._playRandom.PlayUISound("");
+
 		// Start new selection coroutine
 		buildingColorShifter = ColorShifter(hit.collider.gameObject);
 		shadowColorShifter = ColorShifter(hit.transform.GetChild(0).gameObject);

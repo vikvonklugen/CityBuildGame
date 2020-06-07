@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18622f99f583a00408d69d0f758ca256, type: 3}
   m_Name: Darkness
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 26ebf5871af1e324590a37a16b84bb02, type: 3}
   strongAgainst: {fileID: 11400000, guid: 4b8deced264a71f42b29fbe29c5bf705, type: 2}
   weakAgainst: {fileID: 11400000, guid: c6ae969162efe4c479f6c0019a5a6925, type: 2}

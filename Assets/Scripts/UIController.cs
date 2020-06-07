@@ -88,6 +88,7 @@ public class UIController : MonoBehaviour
             }
 
             buildingButton.GetComponent<Button>().onClick.AddListener(() => BuildBuilding(buildingtype));
+            buildingButton.GetComponent<Button>().onClick.AddListener(() => GameManager._playRandom.PlayUISound(""));
         }
 
         AddResourceIndicators();

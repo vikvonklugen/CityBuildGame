@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Tavern
   selectedSound: {fileID: 8300000, guid: d77e5eb9a9dd6bb4dacf12c2c9482726, type: 3}
   buildingInfo: Produces luxuries, which allow you to hire heroes
-  buildingSprite: {fileID: 21300000, guid: 6fdbff886f0bb144a8e74bf44c3e6008, type: 3}
+  buildingSprite: {fileID: 21300000, guid: 1689d899e38e33a4b82cb027fc1f6a46, type: 3}
   buildingCost: 10
   producedResource: 1
   resourceProducedPerTick: 1

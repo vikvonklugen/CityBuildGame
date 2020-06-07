@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator TickSystem()
     {
+        playRandom.InitializeSoundPlayer();
         playRandom.StartSound();
         StartCoroutine(playRandom.PlayMusicTrack(0));
         while (true)
