@@ -18,7 +18,7 @@ MonoBehaviour:
     all of us leprosy.
   eventWinText: "X, in a fit of genius was able to brew a cure to hiccups. We\u2019re
     saved!"
-  enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
+  enemyType: {fileID: 11400000, guid: f597d586e79837341b3ab22602d1c041, type: 2}
   rewards:
   - resourceType: 0
     resourceAmount: 15

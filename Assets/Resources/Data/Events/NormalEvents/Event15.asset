@@ -18,7 +18,7 @@ MonoBehaviour:
     he hacked off as weapons, beating him with their disembodied arms.
   eventWinText: X very respectfully asked the zombies to be quiet, and when they
     said no, he killed them all.
-  enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
+  enemyType: {fileID: 11400000, guid: f597d586e79837341b3ab22602d1c041, type: 2}
   rewards:
   - resourceType: 0
     resourceAmount: 15

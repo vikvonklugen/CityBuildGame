@@ -17,7 +17,7 @@ MonoBehaviour:
   eventLoseText: X tried to fight the abominations, but their stench was too great.
     X slipped in their own vomit and fell unconscious.
   eventWinText: X ran out to meet the abominations and slew them in glorious battle.
-  enemyType: {fileID: 11400000, guid: 35809feb59616c641be91125191e86d0, type: 2}
+  enemyType: {fileID: 11400000, guid: f597d586e79837341b3ab22602d1c041, type: 2}
   rewards:
   - resourceType: 0
     resourceAmount: 15
