@@ -168,12 +168,13 @@ public class InputManager : MonoBehaviour
 		{
 			StartCoroutine(MoveCamera(hit.transform.position + new Vector3(0, -1, -10)));
 		}
-		GameManager.uiController.UpdateUpgradeMenu();
 		// Start new selection coroutine
 		buildingColorShifter = ColorShifter(hit.collider.gameObject);
 		shadowColorShifter = ColorShifter(hit.transform.GetChild(0).gameObject);
 		StartCoroutine(shadowColorShifter);
 		StartCoroutine(buildingColorShifter);
+
+		GameManager.uiController.UpdateUpgradeMenu();
 	}
 
 	public void Deselect()
@@ -210,12 +211,10 @@ public class InputManager : MonoBehaviour
 		{
 			return Input.mousePosition;
 		}
-
-#if UNITY_IOS || UNITY_ANDROID
-			return Input.GetTouch(finger).position;
-#else
-		return Input.mousePosition;
-#endif
+		else
+		{
+			return Input.mousePosition;
+		}
 	}
 
 	IEnumerator MoveCamera(Vector3 targetPos)

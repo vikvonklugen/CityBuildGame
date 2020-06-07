@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recruitmentCost: 3
   description: 'Passive: causes all buildings to cost +2 materials'
-  upsetEventText: The next time he battles, he will go easy on your enemy!
+  upsetEventText: He will force you to send him to your next event!
   upsetMentalityThreshold: -5
   recruitedMentality: 0

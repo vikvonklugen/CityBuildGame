@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Screen.SetResolution(400, 710, false);
         uiController = UIController;
         _playRandom = playRandom;
 
@@ -157,7 +158,6 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        EditorApplication.isPlaying = false;
         /*
         resources = new Dictionary<AResource.Type, int>
         {
