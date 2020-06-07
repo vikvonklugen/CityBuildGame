@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -152,5 +153,33 @@ public class GameManager : MonoBehaviour
         }
 
         uiController.UpdateHUD();
+    }
+
+    public void RestartGame()
+    {
+        EditorApplication.isPlaying = false;
+        /*
+        resources = new Dictionary<AResource.Type, int>
+        {
+            { AResource.Type.Food, 0 },
+            { AResource.Type.Materials, 0 },
+            { AResource.Type.Luxuries, 0 },
+            { AResource.Type.Population, 0 }
+        };
+
+        resourceGrowth = new Dictionary<AResource.Type, int>
+        {
+            { AResource.Type.Food, 0 },
+            { AResource.Type.Materials, 0 },
+            { AResource.Type.Luxuries, 0 },
+            { AResource.Type.Population, 15 }
+        };
+
+        HeroManager.recruitableHeroes = new List<HeroManager.Hero>();
+        HeroManager.recruitedHeroes = new List<HeroManager.Hero>();
+
+        uiController.ResetClock();
+        clockFillAmount = 0;
+        */
     }
 }

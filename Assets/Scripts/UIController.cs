@@ -402,6 +402,7 @@ public class UIController : MonoBehaviour
         {
             resourceText[(int)resourceBundle.resourceType].fontSize++;
 
+            ResourcesChangedEvent();
             GameManager.resources[resourceBundle.resourceType] += increment;
             UpdateHUD();
             UpdateUpgradeMenu();

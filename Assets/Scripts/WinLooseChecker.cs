@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -15,15 +13,10 @@ public class WinLooseChecker : MonoBehaviour
     [TextArea(2, 5)]
     private string winText, looseText;
 
-    [SerializeField]
-    private GameObject infoPanels;
+    public GameObject infoPanels;
 
 
     private int currentTicksWithoutFood;
-
-
-
-
 
     public static event Action GameIsLostEvent = delegate { };
     public static event Action GameIsWonEvent = delegate { };
@@ -31,7 +24,7 @@ public class WinLooseChecker : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.TickEvent += CheckIfLoose;
+        UIController.ResourcesChangedEvent += CheckIfLoose;
         UIController.ResourcesChangedEvent += CheckIfWon;
     }
 
@@ -47,15 +40,16 @@ public class WinLooseChecker : MonoBehaviour
     {
         if (GameManager.resources[AResource.Type.Population] >= 15)
         {
-            GameIsWonEvent();
-            infoPanels.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = winText;
+            infoPanels.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = winText;
+            GameManager.uiController.heroSelectScreen.SetActive(false);
+            GameManager.uiController.buildPanel.SetActive(false);
+            GameManager.uiController.upgradePanel.SetActive(false);
+            GameManager.uiController.heroHireScreen.SetActive(false);
             GameManager.uiController.eventPanel.SetActive(false);
+            GameManager.uiController.eventResultPanel.SetActive(false);
             infoPanels.SetActive(true);
         }
     }
-
-
-
 
     private void CheckIfLoose()
     {
@@ -64,9 +58,13 @@ public class WinLooseChecker : MonoBehaviour
             currentTicksWithoutFood++;
             if (currentTicksWithoutFood >= looseAfterTicksWithoutFood)
             {
-                GameIsLostEvent();
                 infoPanels.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = looseText;
+                GameManager.uiController.heroSelectScreen.SetActive(false);
+                GameManager.uiController.buildPanel.SetActive(false);
+                GameManager.uiController.upgradePanel.SetActive(false);
+                GameManager.uiController.heroHireScreen.SetActive(false);
                 GameManager.uiController.eventPanel.SetActive(false);
+                GameManager.uiController.eventResultPanel.SetActive(false);
                 infoPanels.SetActive(true);
             }
         }
@@ -74,14 +72,9 @@ public class WinLooseChecker : MonoBehaviour
             currentTicksWithoutFood = 0;
     }
 
-
-
     private void OnDisable()
     {
-        GameManager.TickEvent -= CheckIfLoose;
+        UIController.ResourcesChangedEvent -= CheckIfLoose;
         UIController.ResourcesChangedEvent -= CheckIfWon;
     }
-
-    // check when a tick happens if there is food
-
 }
