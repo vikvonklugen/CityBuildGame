@@ -12003,8 +12003,8 @@ MonoBehaviour:
   _uisource: {fileID: 1940874604}
   _generalsource: {fileID: 78376052}
   musicTracks:
-  - {fileID: 8300000, guid: 611360707d528b74ab691676243de7f6, type: 3}
   - {fileID: 8300000, guid: 6908a2b8d52d083418409b45a6f68fd6, type: 3}
+  - {fileID: 8300000, guid: 611360707d528b74ab691676243de7f6, type: 3}
   - {fileID: 8300000, guid: ae4a762e8bb44fc48a13f30a324dcf52, type: 3}
   - {fileID: 8300000, guid: 69bdfe815b17c5c4d825a0ee49987967, type: 3}
   - {fileID: 8300000, guid: 9e6d6d44f55cf794bba9dc10e4c8a27e, type: 3}
@@ -12020,9 +12020,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3a2835c6f74359a4cbabe9e0a4e1d9d5, type: 3}
   buildingDestroyed:
   - {fileID: 8300000, guid: d9aa88a8c53a1024a90be0d172bdde5d, type: 3}
-  output: {fileID: 0}
-  music: {fileID: 0}
-  ui: {fileID: 0}
+  output: {fileID: -5120227447225496707, guid: e985ca61aa09f044a931bfb8c7eaa73c, type: 2}
+  music: {fileID: 3795370416832017730, guid: e985ca61aa09f044a931bfb8c7eaa73c, type: 2}
+  ui: {fileID: 4590224452631173370, guid: e985ca61aa09f044a931bfb8c7eaa73c, type: 2}
   minPitch: 1
   maxPitch: 1
   _audioBanks:
