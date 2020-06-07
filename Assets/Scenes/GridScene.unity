@@ -11888,9 +11888,64 @@ MonoBehaviour:
   output: {fileID: 0}
   music: {fileID: 0}
   ui: {fileID: 0}
-  minPitch: 0.95
-  maxPitch: 1.05
-  _audioBanks: []
+  minPitch: 1
+  maxPitch: 1
+  _audioBanks:
+  - Clips:
+    - clip: {fileID: 8300000, guid: d13853a026319cf4393b76c2a104e644, type: 3}
+      weight: 1
+  - Clips:
+    - clip: {fileID: 8300000, guid: f2f51e6157d3bbc44b7973bdf5a4a100, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: 6f6127fb36991ef42bb90cff74a7db3d, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: 29045b8f2ea54a149adf3ba09d95c6be, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: 9f916bd5191f77f478829033960eff53, type: 3}
+      weight: 25
+  - Clips:
+    - clip: {fileID: 8300000, guid: b56688e88795ee449b207a2ee1e8cb16, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: c74c4c4844dd49a4ea8b7169e16128a8, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: a41cf8f74a0c5f64f9fca882c8db9364, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: 57d13deeddf66e1468e93da4a6f31d1e, type: 3}
+      weight: 25
+  - Clips:
+    - clip: {fileID: 8300000, guid: fe5288461cb06654a8681bbe8c3f13fb, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: 5f34bda9ea60b914a8bfe0566e1fcee8, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: 0a8240885d412ef4bb2cc035712632fa, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: 9b4681ce31701fd4dbf472088aa72fe6, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: e12b267091bbf624ca14c99296a68164, type: 3}
+      weight: 25
+  - Clips:
+    - clip: {fileID: 8300000, guid: c48b0a6367f800b4a9845f4cd83cf1a3, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: 48e65e8ae1586c3418d294edb88cba0b, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: c2b7addc82aab124084f8c3ef88262b4, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: 3507d19a36eb93d498d4c38e02aef425, type: 3}
+      weight: 25
+  - Clips:
+    - clip: {fileID: 8300000, guid: 84486bdf535da5e4e8037c5e396a950d, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: 7578fb1743fa82e47993de9e915cb93d, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: 9992b226227b02847997e2bf2b8a1a03, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: d0b7ee4f02aa77f47b250328eb8359e6, type: 3}
+      weight: 25
+    - clip: {fileID: 8300000, guid: e12b267091bbf624ca14c99296a68164, type: 3}
+      weight: 50
+  - Clips:
+    - clip: {fileID: 8300000, guid: e12b267091bbf624ca14c99296a68164, type: 3}
+      weight: 1
 --- !u!1 &1755894869
 GameObject:
   m_ObjectHideFlags: 0
