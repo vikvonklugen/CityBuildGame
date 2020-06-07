@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Blacksmith
   selectedSound: {fileID: 8300000, guid: 4014c0964a870ad47b1ef0ed44da7915, type: 3}
   buildingInfo: Produces materials needed to make buildings.
-  buildingSprite: {fileID: 21300000, guid: 6fdbff886f0bb144a8e74bf44c3e6008, type: 3}
+  buildingSprite: {fileID: 21300000, guid: bcc176d428621294e9ef194df0f73f34, type: 3}
   buildingCost: 10
   producedResource: 2
   resourceProducedPerTick: 5
