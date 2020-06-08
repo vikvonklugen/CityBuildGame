@@ -2,16 +2,16 @@
 using TMPro;
 using UnityEngine;
 
-public class WinLooseChecker : MonoBehaviour
+public class WinLoseManager : MonoBehaviour
 {
 
     [SerializeField]
-    private int looseAfterTicksWithoutFood;
+    private int loseAfterTicksWithoutFood;
 
 
     [SerializeField]
     [TextArea(2, 5)]
-    private string winText, looseText;
+    private string winText, loseText;
 
     public GameObject infoPanels;
 
@@ -24,7 +24,7 @@ public class WinLooseChecker : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.TickEvent += CheckIfLoose;
+        GameManager.TickEvent += CheckIfLost;
         UIController.ResourcesChangedEvent += CheckIfWon;
     }
 
@@ -51,14 +51,14 @@ public class WinLooseChecker : MonoBehaviour
         }
     }
 
-    private void CheckIfLoose()
+    private void CheckIfLost()
     {
         if (GameManager.resources[AResource.Type.Food] < 0)
         {
             currentTicksWithoutFood++;
-            if (currentTicksWithoutFood >= looseAfterTicksWithoutFood)
+            if (currentTicksWithoutFood >= loseAfterTicksWithoutFood)
             {
-                infoPanels.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = looseText;
+                infoPanels.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = loseText;
                 GameManager.uiController.heroSelectScreen.SetActive(false);
                 GameManager.uiController.buildPanel.SetActive(false);
                 GameManager.uiController.upgradePanel.SetActive(false);
@@ -74,7 +74,7 @@ public class WinLooseChecker : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.TickEvent -= CheckIfLoose;
+        GameManager.TickEvent -= CheckIfLost;
         UIController.ResourcesChangedEvent -= CheckIfWon;
     }
 }
